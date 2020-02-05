@@ -5,11 +5,18 @@
  */
 package interfaz;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author User
  */
 public class Ventana extends javax.swing.JFrame {
+
+    /**
+     * Cantidad de intentos
+     */
+    public static final int MAX_ATTEMPTS = 5;
 
     /**
      * Creates new form Ventana
@@ -27,21 +34,114 @@ public class Ventana extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        btn_iniciar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Proyecto 1");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setResizable(false);
+
+        btn_iniciar.setText("Iniciar");
+        btn_iniciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_iniciarActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Presiona el boton \"Iniciar\"");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btn_iniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addContainerGap(74, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(btn_iniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_iniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_iniciarActionPerformed
+
+        int number = (int) (Math.random() * 99);
+        String answer;
+
+        JOptionPane.showMessageDialog(this, "A continuacion tendras " + MAX_ATTEMPTS + " intentos.", "¡Antes de empezar!", JOptionPane.INFORMATION_MESSAGE);
+
+        for (int i = 0; i < MAX_ATTEMPTS; i = i + 1) {
+
+            answer = JOptionPane.showInputDialog(this, "¿Que numero he pensado?", "Intento #" + (i + 1), JOptionPane.QUESTION_MESSAGE);
+
+            /**
+             * Validamos la respuesta
+             */
+            if (answer != null) {
+
+                try {
+
+                    if (Integer.parseInt(answer) == number) {
+                        JOptionPane.showMessageDialog(this, "Lo has logrado", "¡Felicitaciones!", JOptionPane.INFORMATION_MESSAGE);
+                        break;
+                    }
+
+                    if (Integer.parseInt(answer) < number) {
+                        JOptionPane.showMessageDialog(this, "He pensado un numero mayor", "¡Oups!", JOptionPane.ERROR_MESSAGE);
+                    }
+
+                    if (Integer.parseInt(answer) > number) {
+                        JOptionPane.showMessageDialog(this, "He pensado un numero menor", "¡Oups!", JOptionPane.ERROR_MESSAGE);
+                    }
+
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(this, "Lo siento, ese numero no es valido", "¡Oups!", JOptionPane.ERROR_MESSAGE);
+                    i = i - 1;
+                }
+
+            } else {
+
+                if (JOptionPane.showConfirmDialog(this, "¿Tan rapido te rindes?", "¿En serio?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                    break;
+                } else {
+                    i = i - 1;
+                }
+
+            }
+
+        }
+
+    }//GEN-LAST:event_btn_iniciarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -79,5 +179,8 @@ public class Ventana extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_iniciar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
