@@ -95,50 +95,144 @@ public class Ventana extends javax.swing.JFrame {
 
     private void btn_iniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_iniciarActionPerformed
 
+        /**
+         * Numero pensado
+         */
         int number = (int) (Math.random() * 99);
+
+        /**
+         * Bandera de aprobacion
+         */
+        boolean approved = false;
+
+        /**
+         * Contador de intentos
+         */
+        int counter;
+
+        /**
+         * Respuesta proporcionada
+         */
         String answer;
 
+        /**
+         * Mensaje inicial
+         */
         JOptionPane.showMessageDialog(this, "A continuacion tendras " + MAX_ATTEMPTS + " intentos.", "¡Antes de empezar!", JOptionPane.INFORMATION_MESSAGE);
 
-        for (int i = 0; i < MAX_ATTEMPTS; i = i + 1) {
+        /**
+         * Depuracion
+         */
+        System.out.println("Numero: " + number);
 
-            answer = JOptionPane.showInputDialog(this, "¿Que numero he pensado?", "Intento #" + (i + 1), JOptionPane.QUESTION_MESSAGE);
+        for (counter = 0; counter < MAX_ATTEMPTS; counter = counter + 1) {
 
             /**
-             * Validamos la respuesta
+             * Solicitamos la respuesta
+             */
+            answer = JOptionPane.showInputDialog(this, "¿Que numero he pensado?", "Intento #" + (counter + 1), JOptionPane.QUESTION_MESSAGE);
+
+            /**
+             * Validacion: Respuesta nula
              */
             if (answer != null) {
 
                 try {
 
+                    /**
+                     * Validacion: Respuesta correcta
+                     */
                     if (Integer.parseInt(answer) == number) {
                         JOptionPane.showMessageDialog(this, "Lo has logrado", "¡Felicitaciones!", JOptionPane.INFORMATION_MESSAGE);
+                        approved = true;
                         break;
                     }
 
+                    /**
+                     * Validacion: Respuesta menor
+                     */
                     if (Integer.parseInt(answer) < number) {
                         JOptionPane.showMessageDialog(this, "He pensado un numero mayor", "¡Oups!", JOptionPane.ERROR_MESSAGE);
                     }
 
+                    /**
+                     * Validacion: Respuesta mayor
+                     */
                     if (Integer.parseInt(answer) > number) {
                         JOptionPane.showMessageDialog(this, "He pensado un numero menor", "¡Oups!", JOptionPane.ERROR_MESSAGE);
                     }
 
                 } catch (NumberFormatException e) {
+
+                    /**
+                     * Validacion: Respuesta numerica
+                     */
                     JOptionPane.showMessageDialog(this, "Lo siento, ese numero no es valido", "¡Oups!", JOptionPane.ERROR_MESSAGE);
-                    i = i - 1;
+                    counter = counter - 1;
+
                 }
 
             } else {
 
+                /**
+                 * Mensaje de rendicion
+                 */
                 if (JOptionPane.showConfirmDialog(this, "¿Tan rapido te rindes?", "¿En serio?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
                     break;
                 } else {
-                    i = i - 1;
+                    counter = counter - 1;
                 }
 
             }
 
+        }
+
+        /**
+         * Mensaje de resultado
+         */
+        if (approved) {
+
+            switch (counter) {
+
+                /**
+                 * Intento #1
+                 */
+                case 0:
+                    JOptionPane.showMessageDialog(this, "¡Lo has conseguido, eres una leyenda en el arte de la adivinacion!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
+                    break;
+
+                /**
+                 * Intento #2
+                 */
+                case 1:
+                    JOptionPane.showMessageDialog(this, "¡Lo has conseguido, eres un maestro en el arte de la adivinacion!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
+                    break;
+
+                /**
+                 * Intento #3
+                 */
+                case 2:
+                    JOptionPane.showMessageDialog(this, "¡Lo has conseguido, eres un experto en el arte de la adivinacion!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
+                    break;
+
+                /**
+                 * Intento #4
+                 */
+                case 3:
+                    JOptionPane.showMessageDialog(this, "¡Lo has conseguido, eres un principiante en el arte de la adivinacion!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
+                    break;
+
+                /**
+                 * Intento #5
+                 */
+                case 4:
+                    JOptionPane.showMessageDialog(this, "¡Lo has conseguido, eres un aprendiz en el arte de la adivinacion!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
+                    break;
+
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "¡Suerte para la proxima!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
         }
 
     }//GEN-LAST:event_btn_iniciarActionPerformed
