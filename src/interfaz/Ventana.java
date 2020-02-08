@@ -34,42 +34,53 @@ public class Ventana extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        btn_iniciar = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        container = new javax.swing.JPanel();
+        button = new javax.swing.JButton();
+        label0 = new javax.swing.JLabel();
+        label1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Proyecto 1");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setResizable(false);
 
-        btn_iniciar.setText("Iniciar");
-        btn_iniciar.addActionListener(new java.awt.event.ActionListener() {
+        button.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        button.setText("Iniciar");
+        button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_iniciarActionPerformed(evt);
+                buttonActionPerformed(evt);
             }
         });
 
-        jLabel1.setText("Presiona el boton \"Iniciar\"");
+        label0.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        label0.setText("1) Presiona el boton \"Iniciar\".");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        label1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        label1.setText("2) Adivinar el numero.");
+
+        javax.swing.GroupLayout containerLayout = new javax.swing.GroupLayout(container);
+        container.setLayout(containerLayout);
+        containerLayout.setHorizontalGroup(
+            containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(containerLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btn_iniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(button, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel1)
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addGroup(containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(label0)
+                    .addComponent(label1))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        containerLayout.setVerticalGroup(
+            containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(containerLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(btn_iniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(containerLayout.createSequentialGroup()
+                        .addComponent(label0)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(label1))
+                    .addComponent(button, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -79,69 +90,69 @@ public class Ventana extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(container, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(container, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_iniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_iniciarActionPerformed
+    private void buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonActionPerformed
 
         /**
-         * Numero pensado
-         */
+        * Numero pensado
+        */
         int number = (int) (Math.random() * 99);
 
         /**
-         * Bandera de aprobacion
-         */
+        * Bandera de aprobacion
+        */
         boolean approved = false;
 
         /**
-         * Contador de intentos
-         */
+        * Contador de intentos
+        */
         int counter;
 
         /**
-         * Respuesta proporcionada
-         */
+        * Respuesta proporcionada
+        */
         String answer;
 
         /**
-         * Mensaje inicial
-         */
+        * Mensaje inicial
+        */
         JOptionPane.showMessageDialog(this, "A continuacion tendras " + MAX_ATTEMPTS + " intentos.", "¡Antes de empezar!", JOptionPane.INFORMATION_MESSAGE);
 
         /**
-         * Depuracion
-         */
+        * Depuracion
+        */
         System.out.println("Numero: " + number);
 
         for (counter = 0; counter < MAX_ATTEMPTS; counter = counter + 1) {
 
             /**
-             * Solicitamos la respuesta
-             */
+            * Solicitamos la respuesta
+            */
             answer = JOptionPane.showInputDialog(this, "¿Que numero he pensado?", "Intento #" + (counter + 1), JOptionPane.QUESTION_MESSAGE);
 
             /**
-             * Validacion: Respuesta nula
-             */
+            * Validacion: Respuesta nula
+            */
             if (answer != null) {
 
                 try {
 
                     /**
-                     * Validacion: Respuesta correcta
-                     */
+                    * Validacion: Respuesta correcta
+                    */
                     if (Integer.parseInt(answer) == number) {
                         JOptionPane.showMessageDialog(this, "Lo has logrado", "¡Felicitaciones!", JOptionPane.INFORMATION_MESSAGE);
                         approved = true;
@@ -149,15 +160,15 @@ public class Ventana extends javax.swing.JFrame {
                     }
 
                     /**
-                     * Validacion: Respuesta menor
-                     */
+                    * Validacion: Respuesta menor
+                    */
                     if (Integer.parseInt(answer) < number) {
                         JOptionPane.showMessageDialog(this, "He pensado un numero mayor", "¡Oups!", JOptionPane.ERROR_MESSAGE);
                     }
 
                     /**
-                     * Validacion: Respuesta mayor
-                     */
+                    * Validacion: Respuesta mayor
+                    */
                     if (Integer.parseInt(answer) > number) {
                         JOptionPane.showMessageDialog(this, "He pensado un numero menor", "¡Oups!", JOptionPane.ERROR_MESSAGE);
                     }
@@ -165,8 +176,8 @@ public class Ventana extends javax.swing.JFrame {
                 } catch (NumberFormatException e) {
 
                     /**
-                     * Validacion: Respuesta numerica
-                     */
+                    * Validacion: Respuesta numerica
+                    */
                     JOptionPane.showMessageDialog(this, "Lo siento, ese numero no es valido", "¡Oups!", JOptionPane.ERROR_MESSAGE);
                     counter = counter - 1;
 
@@ -175,8 +186,8 @@ public class Ventana extends javax.swing.JFrame {
             } else {
 
                 /**
-                 * Mensaje de rendicion
-                 */
+                * Mensaje de rendicion
+                */
                 if (JOptionPane.showConfirmDialog(this, "¿Tan rapido te rindes?", "¿En serio?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
                     break;
                 } else {
@@ -188,54 +199,53 @@ public class Ventana extends javax.swing.JFrame {
         }
 
         /**
-         * Mensaje de resultado
-         */
+        * Mensaje de resultado
+        */
         if (approved) {
 
             switch (counter) {
 
                 /**
-                 * Intento #1
-                 */
+                * Intento #1
+                */
                 case 0:
-                    JOptionPane.showMessageDialog(this, "¡Lo has conseguido, eres una leyenda en el arte de la adivinacion!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
-                    break;
+                JOptionPane.showMessageDialog(this, "¡Lo has conseguido, eres una leyenda en el arte de la adivinacion!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
+                break;
 
                 /**
-                 * Intento #2
-                 */
+                * Intento #2
+                */
                 case 1:
-                    JOptionPane.showMessageDialog(this, "¡Lo has conseguido, eres un maestro en el arte de la adivinacion!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
-                    break;
+                JOptionPane.showMessageDialog(this, "¡Lo has conseguido, eres un maestro en el arte de la adivinacion!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
+                break;
 
                 /**
-                 * Intento #3
-                 */
+                * Intento #3
+                */
                 case 2:
-                    JOptionPane.showMessageDialog(this, "¡Lo has conseguido, eres un experto en el arte de la adivinacion!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
-                    break;
+                JOptionPane.showMessageDialog(this, "¡Lo has conseguido, eres un experto en el arte de la adivinacion!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
+                break;
 
                 /**
-                 * Intento #4
-                 */
+                * Intento #4
+                */
                 case 3:
-                    JOptionPane.showMessageDialog(this, "¡Lo has conseguido, eres un principiante en el arte de la adivinacion!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
-                    break;
+                JOptionPane.showMessageDialog(this, "¡Lo has conseguido, eres un principiante en el arte de la adivinacion!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
+                break;
 
                 /**
-                 * Intento #5
-                 */
+                * Intento #5
+                */
                 case 4:
-                    JOptionPane.showMessageDialog(this, "¡Lo has conseguido, eres un aprendiz en el arte de la adivinacion!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
-                    break;
+                JOptionPane.showMessageDialog(this, "¡Lo has conseguido, eres un aprendiz en el arte de la adivinacion!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
+                break;
 
             }
 
         } else {
             JOptionPane.showMessageDialog(this, "¡Suerte para la proxima!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
         }
-
-    }//GEN-LAST:event_btn_iniciarActionPerformed
+    }//GEN-LAST:event_buttonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -273,8 +283,9 @@ public class Ventana extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_iniciar;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton button;
+    private javax.swing.JPanel container;
+    private javax.swing.JLabel label0;
+    private javax.swing.JLabel label1;
     // End of variables declaration//GEN-END:variables
 }
