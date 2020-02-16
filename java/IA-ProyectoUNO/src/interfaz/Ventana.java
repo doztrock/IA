@@ -56,7 +56,7 @@ public class Ventana extends javax.swing.JFrame {
         label0.setText("1) Presiona el boton \"Iniciar\".");
 
         label1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        label1.setText("2) Adivinar el numero.");
+        label1.setText("2) Adivina el numero.");
 
         javax.swing.GroupLayout containerLayout = new javax.swing.GroupLayout(container);
         container.setLayout(containerLayout);

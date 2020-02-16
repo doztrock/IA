@@ -6,14 +6,20 @@ import tkinter
 from tkinter import messagebox
 from tkinter import simpledialog
 
-''' Rango '''
+#
+#  Cantidad de intentos
+#
+MAX_ATTEMPS = 5
+
+#
+#  Rango
+#
 MIN_VALUE = 0
 MAX_VALUE = 99
 
-''' Cantidad de intentos '''
-MAX_ATTEMPS = 5
-
-''' Asignamos la semilla '''
+#
+#  Asignamos la semilla
+#
 seed(datetime.now())
 
 
@@ -72,6 +78,7 @@ def startGame():
                 )
 
                 approved = True
+                break
 
             #
             # Validacion: Respuesta menor
@@ -167,6 +174,17 @@ button = tkinter.Button(window,
                         compound="c", text="Iniciar")
 button.pack()
 button.place(x=10, y=10)
+
+#
+# Label
+#
+label0 = tkinter.Label(window, text="1) Presiona el boton \"Iniciar\".")
+label0.pack()
+label0.place(x=150, y=25)
+
+label1 = tkinter.Label(window, text="2) Adivina el numero.")
+label1.pack()
+label1.place(x=150, y=75)
 
 #
 #  Mostramos la ventana
