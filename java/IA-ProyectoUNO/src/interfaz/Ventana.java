@@ -19,6 +19,12 @@ public class Ventana extends javax.swing.JFrame {
     public static final int MAX_ATTEMPTS = 5;
 
     /**
+     * Rango
+     */
+    public static final int MIN_VALUE = 0;
+    public static final int MAX_VALUE = 99;
+
+    /**
      * Creates new form Ventana
      */
     public Ventana() {
@@ -107,52 +113,59 @@ public class Ventana extends javax.swing.JFrame {
     private void buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonActionPerformed
 
         /**
-        * Numero pensado
-        */
-        int number = (int) (Math.random() * 99);
+         * Numero pensado
+         */
+        int number = (int) ((Math.random() * MAX_VALUE) + MIN_VALUE);
 
         /**
-        * Bandera de aprobacion
-        */
+         * Bandera de aprobacion
+         */
         boolean approved = false;
 
         /**
-        * Contador de intentos
-        */
+         * Contador de intentos
+         */
         int counter;
 
         /**
-        * Respuesta proporcionada
-        */
+         * Respuesta proporcionada
+         */
         String answer;
 
         /**
-        * Mensaje inicial
-        */
+         * Mensaje inicial
+         */
         JOptionPane.showMessageDialog(this, "A continuacion tendras " + MAX_ATTEMPTS + " intentos.", "¡Antes de empezar!", JOptionPane.INFORMATION_MESSAGE);
 
         /**
-        * Depuracion
-        */
+         * Depuracion
+         */
         System.out.println("Numero: " + number);
 
         for (counter = 0; counter < MAX_ATTEMPTS; counter = counter + 1) {
 
             /**
-            * Solicitamos la respuesta
-            */
+             * Solicitamos la respuesta
+             */
             answer = JOptionPane.showInputDialog(this, "¿Que numero he pensado?", "Intento #" + (counter + 1), JOptionPane.QUESTION_MESSAGE);
 
             /**
-            * Validacion: Respuesta nula
-            */
+             * Validacion: Respuesta nula
+             */
             if (answer != null) {
 
                 try {
 
                     /**
-                    * Validacion: Respuesta correcta
-                    */
+                     * Validacion: Rango
+                     */
+                    if (Integer.parseInt(answer) < MIN_VALUE || Integer.parseInt(answer) > MAX_VALUE) {
+                        throw new NumberFormatException("Numero por fuera del rango");
+                    }
+
+                    /**
+                     * Validacion: Respuesta correcta
+                     */
                     if (Integer.parseInt(answer) == number) {
                         JOptionPane.showMessageDialog(this, "Lo has logrado", "¡Felicitaciones!", JOptionPane.INFORMATION_MESSAGE);
                         approved = true;
@@ -160,15 +173,15 @@ public class Ventana extends javax.swing.JFrame {
                     }
 
                     /**
-                    * Validacion: Respuesta menor
-                    */
+                     * Validacion: Respuesta menor
+                     */
                     if (Integer.parseInt(answer) < number) {
                         JOptionPane.showMessageDialog(this, "He pensado un numero mayor", "¡Oups!", JOptionPane.ERROR_MESSAGE);
                     }
 
                     /**
-                    * Validacion: Respuesta mayor
-                    */
+                     * Validacion: Respuesta mayor
+                     */
                     if (Integer.parseInt(answer) > number) {
                         JOptionPane.showMessageDialog(this, "He pensado un numero menor", "¡Oups!", JOptionPane.ERROR_MESSAGE);
                     }
@@ -176,8 +189,8 @@ public class Ventana extends javax.swing.JFrame {
                 } catch (NumberFormatException e) {
 
                     /**
-                    * Validacion: Respuesta numerica
-                    */
+                     * Validacion: Respuesta numerica
+                     */
                     JOptionPane.showMessageDialog(this, "Lo siento, ese numero no es valido", "¡Oups!", JOptionPane.ERROR_MESSAGE);
                     counter = counter - 1;
 
@@ -186,8 +199,8 @@ public class Ventana extends javax.swing.JFrame {
             } else {
 
                 /**
-                * Mensaje de rendicion
-                */
+                 * Mensaje de rendicion
+                 */
                 if (JOptionPane.showConfirmDialog(this, "¿Tan rapido te rindes?", "¿En serio?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
                     break;
                 } else {
@@ -199,46 +212,46 @@ public class Ventana extends javax.swing.JFrame {
         }
 
         /**
-        * Mensaje de resultado
-        */
+         * Mensaje de resultado
+         */
         if (approved) {
 
             switch (counter) {
 
                 /**
-                * Intento #1
-                */
+                 * Intento #1
+                 */
                 case 0:
-                JOptionPane.showMessageDialog(this, "¡Lo has conseguido, eres una leyenda en el arte de la adivinacion!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
-                break;
+                    JOptionPane.showMessageDialog(this, "¡Lo has conseguido, eres una leyenda en el arte de la adivinacion!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
+                    break;
 
                 /**
-                * Intento #2
-                */
+                 * Intento #2
+                 */
                 case 1:
-                JOptionPane.showMessageDialog(this, "¡Lo has conseguido, eres un maestro en el arte de la adivinacion!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
-                break;
+                    JOptionPane.showMessageDialog(this, "¡Lo has conseguido, eres un maestro en el arte de la adivinacion!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
+                    break;
 
                 /**
-                * Intento #3
-                */
+                 * Intento #3
+                 */
                 case 2:
-                JOptionPane.showMessageDialog(this, "¡Lo has conseguido, eres un experto en el arte de la adivinacion!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
-                break;
+                    JOptionPane.showMessageDialog(this, "¡Lo has conseguido, eres un experto en el arte de la adivinacion!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
+                    break;
 
                 /**
-                * Intento #4
-                */
+                 * Intento #4
+                 */
                 case 3:
-                JOptionPane.showMessageDialog(this, "¡Lo has conseguido, eres un principiante en el arte de la adivinacion!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
-                break;
+                    JOptionPane.showMessageDialog(this, "¡Lo has conseguido, eres un principiante en el arte de la adivinacion!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
+                    break;
 
                 /**
-                * Intento #5
-                */
+                 * Intento #5
+                 */
                 case 4:
-                JOptionPane.showMessageDialog(this, "¡Lo has conseguido, eres un aprendiz en el arte de la adivinacion!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
-                break;
+                    JOptionPane.showMessageDialog(this, "¡Lo has conseguido, eres un aprendiz en el arte de la adivinacion!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
+                    break;
 
             }
 
