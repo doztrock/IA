@@ -5,6 +5,7 @@
  */
 package interfaz;
 
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 
@@ -120,6 +121,9 @@ public class Interfaz extends javax.swing.JFrame {
 
     private void botonEmpezarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEmpezarActionPerformed
 
+        ArrayList<String[]> resultado;
+        ArrayList<String[]> resultadoLimpio;
+
         JRadioButton opciones[] = new JRadioButton[3];
 
         opciones[0] = this.opcionA;
@@ -151,11 +155,29 @@ public class Interfaz extends javax.swing.JFrame {
         }
 
         this.mostrarEnunciado();
-        this.resolver();
+        resultado = this.resolver();
+        resultadoLimpio = this.limpiarResultado(resultado);
+
+        for (String[] a : resultado) {
+            System.out.println(a[0]);
+            System.out.println(a[1]);
+            System.out.println(a[2]);
+        }
+
+        System.out.println("----------------------");
+
+        for (String[] b : resultadoLimpio) {
+            System.out.println(b[0]);
+            System.out.println(b[1]);
+            System.out.println(b[2]);
+        }
 
     }//GEN-LAST:event_botonEmpezarActionPerformed
 
-    private void resolver() {
+    private ArrayList<String[]> resolver() {
+
+        // Resultado
+        ArrayList<String[]> resultado = new ArrayList<>();
 
         // Caminos
         boolean[][] caminos = new boolean[3][3];
@@ -250,14 +272,56 @@ public class Interfaz extends javax.swing.JFrame {
 
             }
 
-            System.out.println(Ptemporal);
-            System.out.println(Qtemporal);
-            System.out.println(Rtemporal);
-            System.out.println();
-            System.out.println();
+            // Agregamos premisas resultantes
+            String[] premisa = new String[3];
+
+            premisa[0] = Ptemporal;
+            premisa[1] = Qtemporal;
+            premisa[2] = Rtemporal;
+
+            resultado.add(premisa);
 
         }
 
+        return resultado;
+    }
+
+    private ArrayList<String[]> limpiarResultado(ArrayList<String[]> resultado) {
+
+        ArrayList<String[]> resultadoLimpio = new ArrayList<>();
+
+        for (String[] premisa : resultado) {
+
+            int contador = 0;
+
+            if (analizarEnunciado(premisa[0])) {
+                contador++;
+            }
+
+            if (analizarEnunciado(premisa[1])) {
+                contador++;
+            }
+
+            if (analizarEnunciado(premisa[2])) {
+                contador++;
+            }
+
+            if (contador <= 1) {
+
+                // Agregamos premisas que cumplen el requerimiento
+                String[] premisaLimpia = new String[3];
+
+                premisaLimpia[0] = premisa[0];
+                premisaLimpia[1] = premisa[1];
+                premisaLimpia[2] = premisa[2];
+
+                resultadoLimpio.add(premisaLimpia);
+
+            }
+
+        }
+
+        return resultadoLimpio;
     }
 
     private void mostrarEnunciado() {
