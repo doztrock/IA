@@ -6,6 +6,7 @@
 package interfaz;
 
 import java.util.ArrayList;
+import java.util.Random;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 
@@ -39,12 +40,8 @@ public class Interfaz extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup = new javax.swing.ButtonGroup();
-        jPanel1 = new javax.swing.JPanel();
+        panel = new javax.swing.JPanel();
         botonEmpezar = new javax.swing.JButton();
-        opcionA = new javax.swing.JRadioButton();
-        opcionB = new javax.swing.JRadioButton();
-        opcionC = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ejercicio 2");
@@ -57,46 +54,21 @@ public class Interfaz extends javax.swing.JFrame {
             }
         });
 
-        buttonGroup.add(opcionA);
-        opcionA.setText("Unidad A");
-
-        buttonGroup.add(opcionB);
-        opcionB.setSelected(true);
-        opcionB.setText("Unidad B");
-
-        buttonGroup.add(opcionC);
-        opcionC.setText("Unidad C");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
+        panel.setLayout(panelLayout);
+        panelLayout.setHorizontalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(opcionB)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
-                        .addComponent(botonEmpezar))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(opcionC)
-                            .addComponent(opcionA))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(botonEmpezar, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        panelLayout.setVerticalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(opcionA)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(opcionB)
-                    .addComponent(botonEmpezar))
-                .addGap(18, 18, 18)
-                .addComponent(opcionC)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(botonEmpezar, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -105,14 +77,14 @@ public class Interfaz extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -121,43 +93,33 @@ public class Interfaz extends javax.swing.JFrame {
 
     private void botonEmpezarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEmpezarActionPerformed
 
+        // Elementos de resultado
         ArrayList<String[]> resultado;
         ArrayList<String[]> resultadoLimpio;
+        Conclusion conclusion;
 
-        JRadioButton opciones[] = new JRadioButton[3];
+        // Opciones
+        int[] opciones = new int[3];
 
-        opciones[0] = this.opcionA;
-        opciones[1] = this.opcionB;
-        opciones[2] = this.opcionC;
+        opciones[0] = Interfaz.A;
+        opciones[1] = Interfaz.B;
+        opciones[2] = Interfaz.C;
 
-        for (JRadioButton opcion : opciones) {
+        // Seleccionamos la opcion
+        Random random = new Random();
+        int aleatorio = random.nextInt(3);
 
-            if (opcion.isSelected()) {
+        this.OPCION_SELECCIONADA = opciones[aleatorio == 3 ? 2 : aleatorio];
 
-                switch (opcion.getText().charAt(7)) {
-
-                    case 'A':
-                        this.OPCION_SELECCIONADA = Interfaz.A;
-                        break;
-
-                    case 'B':
-                        this.OPCION_SELECCIONADA = Interfaz.B;
-                        break;
-
-                    case 'C':
-                        this.OPCION_SELECCIONADA = Interfaz.C;
-                        break;
-
-                }
-
-            }
-
-        }
-
+        // Mostramos enunciado
         this.mostrarEnunciado();
+
         resultado = this.generarResultado();
         resultadoLimpio = this.limpiarResultado(resultado);
+        conclusion = resolver(resultadoLimpio);
 
+        /*
+        
         System.out.println("----------------------");
 
         for (String[] a : resultado) {
@@ -176,10 +138,13 @@ public class Interfaz extends javax.swing.JFrame {
 
         System.out.println("----------------------");
 
-        Conclusion conclusion = resolver(resultadoLimpio);
 
         System.out.println("La premisa verdadera es: " + conclusion.getPremisa());
         System.out.println("El software se encuentra en la unidad: " + conclusion.getUbicacion());
+
+        System.out.println("----------------------");
+        
+         */
 
     }//GEN-LAST:event_botonEmpezarActionPerformed
 
@@ -420,7 +385,7 @@ public class Interfaz extends javax.swing.JFrame {
         String enunciadoB = this.construirEnunciadoUnidadB();
         String enunciadoC = this.construirEnunciadoUnidadC();
 
-        JOptionPane.showMessageDialog(null, "A: " + enunciadoA + "\n" + "B: " + enunciadoB + "\n" + "C: " + enunciadoC);
+        JOptionPane.showMessageDialog(null, "A: " + enunciadoA + "\n" + "B: " + enunciadoB + "\n" + "C: " + enunciadoC, "Enunciado", JOptionPane.INFORMATION_MESSAGE);
 
     }
 
@@ -532,10 +497,6 @@ public class Interfaz extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonEmpezar;
-    private javax.swing.ButtonGroup buttonGroup;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton opcionA;
-    private javax.swing.JRadioButton opcionB;
-    private javax.swing.JRadioButton opcionC;
+    private javax.swing.JPanel panel;
     // End of variables declaration//GEN-END:variables
 }
