@@ -155,26 +155,35 @@ public class Interfaz extends javax.swing.JFrame {
         }
 
         this.mostrarEnunciado();
-        resultado = this.resolver();
+        resultado = this.generarResultado();
         resultadoLimpio = this.limpiarResultado(resultado);
 
+        System.out.println("----------------------");
+
         for (String[] a : resultado) {
-            System.out.println(a[0]);
-            System.out.println(a[1]);
-            System.out.println(a[2]);
+            System.out.println("A: " + a[0]);
+            System.out.println("B: " + a[1]);
+            System.out.println("C: " + a[2]);
         }
 
         System.out.println("----------------------");
 
         for (String[] b : resultadoLimpio) {
-            System.out.println(b[0]);
-            System.out.println(b[1]);
-            System.out.println(b[2]);
+            System.out.println("A: " + b[0]);
+            System.out.println("B: " + b[1]);
+            System.out.println("C: " + b[2]);
         }
+
+        System.out.println("----------------------");
+
+        Conclusion conclusion = resolver(resultadoLimpio);
+
+        System.out.println("La premisa verdadera es: " + conclusion.getPremisa());
+        System.out.println("El software se encuentra en la unidad: " + conclusion.getUbicacion());
 
     }//GEN-LAST:event_botonEmpezarActionPerformed
 
-    private ArrayList<String[]> resolver() {
+    private ArrayList<String[]> generarResultado() {
 
         // Resultado
         ArrayList<String[]> resultado = new ArrayList<>();
@@ -322,6 +331,87 @@ public class Interfaz extends javax.swing.JFrame {
         }
 
         return resultadoLimpio;
+    }
+
+    private class Conclusion {
+
+        private String premisa;
+        private char ubicacion;
+
+        public String getPremisa() {
+            return premisa;
+        }
+
+        public void setPremisa(String premisa) {
+            this.premisa = premisa;
+        }
+
+        public char getUbicacion() {
+            return ubicacion;
+        }
+
+        public void setUbicacion(char ubicacion) {
+            this.ubicacion = ubicacion;
+        }
+
+    }
+
+    private Conclusion resolver(ArrayList<String[]> resultadoLimpio) {
+
+        Conclusion conclusion = new Conclusion();
+
+        boolean encontrado = false;
+        int indice = 0;
+
+        for (int i = 0; i < resultadoLimpio.size(); i++) {
+
+            String[] premisa = resultadoLimpio.get(i);
+
+            if (analizarEnunciado(premisa[0]) == false && premisa[0].contains("unidad")) {
+                encontrado = true;
+                indice = i;
+                break;
+            }
+
+            if (analizarEnunciado(premisa[1]) == false && premisa[1].contains("unidad")) {
+                encontrado = true;
+                indice = i;
+                break;
+            }
+
+            if (analizarEnunciado(premisa[2]) == false && premisa[2].contains("unidad")) {
+                encontrado = true;
+                indice = i;
+                break;
+            }
+
+        }
+
+        if (encontrado == true) {
+
+            String[] premisa = resultadoLimpio.get(indice);
+
+            // A
+            if (analizarEnunciado(premisa[0])) {
+                conclusion.setPremisa(premisa[0]);
+                conclusion.setUbicacion('A');
+            }
+
+            // B
+            if (analizarEnunciado(premisa[1])) {
+                conclusion.setPremisa(premisa[1]);
+                conclusion.setUbicacion('B');
+            }
+
+            // C
+            if (analizarEnunciado(premisa[2])) {
+                conclusion.setPremisa(premisa[2]);
+                conclusion.setUbicacion('C');
+            }
+
+        }
+
+        return conclusion;
     }
 
     private void mostrarEnunciado() {
