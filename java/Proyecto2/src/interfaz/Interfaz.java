@@ -8,7 +8,6 @@ package interfaz;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JOptionPane;
-import javax.swing.JRadioButton;
 
 /**
  *
@@ -25,7 +24,7 @@ public class Interfaz extends javax.swing.JFrame {
     private int OPCION_SELECCIONADA;
 
     /* Conclusion */
-    Conclusion conclusion;
+    Conclusion conclusionFinal;
 
     /**
      * Creates new form Interfaz
@@ -51,6 +50,13 @@ public class Interfaz extends javax.swing.JFrame {
         label = new javax.swing.JLabel();
         panel = new javax.swing.JPanel();
         botonEmpezar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
 
         dialog.setTitle("Pregunta");
         dialog.setMinimumSize(new java.awt.Dimension(400, 150));
@@ -142,21 +148,60 @@ public class Interfaz extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("Un personaje X, necesita hallar el codigo de un");
+
+        jLabel2.setText("software inteligente, para ello le entregan 3 unidades");
+
+        jLabel3.setText("de almacenamiento y le indican que en solo una de");
+
+        jLabel4.setText("ellas esta el codigo que requiere.");
+
+        jLabel5.setText("El personaje X solo tiene una oportunidad de escoger");
+
+        jLabel6.setText("y abrir una unidad de almacenamiento, cada unidad");
+
+        jLabel7.setText("tiene una premisa.");
+
         javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
         panel.setLayout(panelLayout);
         panelLayout.setHorizontalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(botonEmpezar, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(botonEmpezar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelLayout.createSequentialGroup()
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelLayout.setVerticalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(botonEmpezar, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botonEmpezar, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -181,6 +226,11 @@ public class Interfaz extends javax.swing.JFrame {
 
     private void botonEmpezarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEmpezarActionPerformed
 
+        // Habilitamos los botones
+        this.botonA.setEnabled(true);
+        this.botonB.setEnabled(true);
+        this.botonC.setEnabled(true);
+
         // Elementos de resultado
         ArrayList<String[]> resultado;
         ArrayList<String[]> resultadoLimpio;
@@ -204,7 +254,7 @@ public class Interfaz extends javax.swing.JFrame {
         // Resolvemos las premisas
         resultado = this.generarResultado();
         resultadoLimpio = this.limpiarResultado(resultado);
-        conclusion = resolver(resultadoLimpio);
+        conclusionFinal = resolver(resultadoLimpio);
 
         // Mostramos la ventana
         dialog.setVisible(true);
@@ -241,36 +291,51 @@ public class Interfaz extends javax.swing.JFrame {
 
     private void botonAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAActionPerformed
 
+        this.botonA.setEnabled(false);
+        this.botonB.setEnabled(false);
+        this.botonC.setEnabled(false);
+
         char boton = 'A';
 
-        if (conclusion.getUbicacion() == boton) {
+        if (conclusionFinal.getUbicacion() == boton) {
             JOptionPane.showMessageDialog(null, "Acertaste", "Felicidades", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(null, "Fallaste", "Ups", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "El software se encuentra en la unidad " + conclusionFinal.getUbicacion(), "Solucion", JOptionPane.INFORMATION_MESSAGE);
         }
 
     }//GEN-LAST:event_botonAActionPerformed
 
     private void botonBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBActionPerformed
 
+        this.botonA.setEnabled(false);
+        this.botonB.setEnabled(false);
+        this.botonC.setEnabled(false);
+
         char boton = 'B';
 
-        if (conclusion.getUbicacion() == boton) {
+        if (conclusionFinal.getUbicacion() == boton) {
             JOptionPane.showMessageDialog(null, "Acertaste", "Felicidades", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(null, "Fallaste", "Ups", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "El software se encuentra en la unidad " + conclusionFinal.getUbicacion(), "Solucion", JOptionPane.INFORMATION_MESSAGE);
         }
 
     }//GEN-LAST:event_botonBActionPerformed
 
     private void botonCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCActionPerformed
 
+        this.botonA.setEnabled(false);
+        this.botonB.setEnabled(false);
+        this.botonC.setEnabled(false);
+
         char boton = 'C';
 
-        if (conclusion.getUbicacion() == boton) {
+        if (conclusionFinal.getUbicacion() == boton) {
             JOptionPane.showMessageDialog(null, "Acertaste", "Felicidades", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(null, "Fallaste", "Ups", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "El software se encuentra en la unidad " + conclusionFinal.getUbicacion(), "Solucion", JOptionPane.INFORMATION_MESSAGE);
         }
 
     }//GEN-LAST:event_botonCActionPerformed
@@ -628,6 +693,13 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JButton botonC;
     private javax.swing.JButton botonEmpezar;
     private javax.swing.JDialog dialog;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel label;
     private javax.swing.JPanel panel;
