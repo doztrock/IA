@@ -24,6 +24,9 @@ public class Interfaz extends javax.swing.JFrame {
     /* Opcion */
     private int OPCION_SELECCIONADA;
 
+    /* Conclusion */
+    Conclusion conclusion;
+
     /**
      * Creates new form Interfaz
      */
@@ -42,40 +45,73 @@ public class Interfaz extends javax.swing.JFrame {
 
         dialog = new javax.swing.JDialog();
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        botonA = new javax.swing.JButton();
+        botonB = new javax.swing.JButton();
+        botonC = new javax.swing.JButton();
+        label = new javax.swing.JLabel();
         panel = new javax.swing.JPanel();
         botonEmpezar = new javax.swing.JButton();
 
-        jButton1.setText("jButton1");
+        dialog.setTitle("Pregunta");
+        dialog.setMinimumSize(new java.awt.Dimension(400, 150));
 
-        jButton2.setText("jButton2");
+        botonA.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        botonA.setIcon(new javax.swing.ImageIcon("C:\\Users\\Ivan\\Downloads\\save.png")); // NOI18N
+        botonA.setText("A");
+        botonA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("jButton3");
+        botonB.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        botonB.setIcon(new javax.swing.ImageIcon("C:\\Users\\Ivan\\Downloads\\save.png")); // NOI18N
+        botonB.setText("B");
+        botonB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonBActionPerformed(evt);
+            }
+        });
+
+        botonC.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        botonC.setIcon(new javax.swing.ImageIcon("C:\\Users\\Ivan\\Downloads\\save.png")); // NOI18N
+        botonC.setText("C");
+        botonC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCActionPerformed(evt);
+            }
+        });
+
+        label.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        label.setText("¿Donde se encuentra el software?");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(59, 59, 59)
-                .addComponent(jButton1)
-                .addGap(18, 18, 18)
-                .addComponent(jButton2)
-                .addGap(18, 18, 18)
-                .addComponent(jButton3)
-                .addContainerGap(62, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(53, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(label)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(botonA)
+                        .addGap(18, 18, 18)
+                        .addComponent(botonB)
+                        .addGap(18, 18, 18)
+                        .addComponent(botonC)))
+                .addGap(48, 48, 48))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(label)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
-                .addContainerGap(240, Short.MAX_VALUE))
+                    .addComponent(botonA)
+                    .addComponent(botonB)
+                    .addComponent(botonC))
+                .addGap(145, 145, 145))
         );
 
         javax.swing.GroupLayout dialogLayout = new javax.swing.GroupLayout(dialog.getContentPane());
@@ -91,8 +127,8 @@ public class Interfaz extends javax.swing.JFrame {
             dialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dialogLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -148,7 +184,6 @@ public class Interfaz extends javax.swing.JFrame {
         // Elementos de resultado
         ArrayList<String[]> resultado;
         ArrayList<String[]> resultadoLimpio;
-        Conclusion conclusion;
 
         // Opciones
         int[] opciones = new int[3];
@@ -166,9 +201,13 @@ public class Interfaz extends javax.swing.JFrame {
         // Mostramos enunciado
         this.mostrarEnunciado();
 
+        // Resolvemos las premisas
         resultado = this.generarResultado();
         resultadoLimpio = this.limpiarResultado(resultado);
         conclusion = resolver(resultadoLimpio);
+
+        // Mostramos la ventana
+        dialog.setVisible(true);
 
         /*
         
@@ -199,6 +238,42 @@ public class Interfaz extends javax.swing.JFrame {
          */
 
     }//GEN-LAST:event_botonEmpezarActionPerformed
+
+    private void botonAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAActionPerformed
+
+        char boton = 'A';
+
+        if (conclusion.getUbicacion() == boton) {
+            JOptionPane.showMessageDialog(null, "Acertaste", "Felicidades", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Fallaste", "Ups", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }//GEN-LAST:event_botonAActionPerformed
+
+    private void botonBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBActionPerformed
+
+        char boton = 'B';
+
+        if (conclusion.getUbicacion() == boton) {
+            JOptionPane.showMessageDialog(null, "Acertaste", "Felicidades", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Fallaste", "Ups", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }//GEN-LAST:event_botonBActionPerformed
+
+    private void botonCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCActionPerformed
+
+        char boton = 'C';
+
+        if (conclusion.getUbicacion() == boton) {
+            JOptionPane.showMessageDialog(null, "Acertaste", "Felicidades", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Fallaste", "Ups", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }//GEN-LAST:event_botonCActionPerformed
 
     private ArrayList<String[]> generarResultado() {
 
@@ -548,12 +623,13 @@ public class Interfaz extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonA;
+    private javax.swing.JButton botonB;
+    private javax.swing.JButton botonC;
     private javax.swing.JButton botonEmpezar;
     private javax.swing.JDialog dialog;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel label;
     private javax.swing.JPanel panel;
     // End of variables declaration//GEN-END:variables
 }
