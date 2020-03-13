@@ -119,8 +119,14 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="positionButton11">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Dialog" size="24" style="1"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="A"/>
               </Properties>
+              <Events>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="positionButtonKeyPressed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -146,8 +152,14 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="positionButton21">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Dialog" size="24" style="1"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="D"/>
               </Properties>
+              <Events>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="positionButtonKeyPressed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -173,8 +185,14 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="positionButton12">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Dialog" size="24" style="1"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="B"/>
               </Properties>
+              <Events>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="positionButtonKeyPressed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -200,8 +218,14 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="positionButton22">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Dialog" size="24" style="1"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="E"/>
               </Properties>
+              <Events>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="positionButtonKeyPressed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -227,8 +251,14 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="positionButton13">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Dialog" size="24" style="1"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="C"/>
               </Properties>
+              <Events>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="positionButtonKeyPressed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -254,8 +284,14 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="positionButton23">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Dialog" size="24" style="1"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="F"/>
               </Properties>
+              <Events>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="positionButtonKeyPressed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
