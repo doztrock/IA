@@ -1,10 +1,8 @@
 package game;
 
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import org.apache.commons.lang3.ArrayUtils;
 
 public class Window extends javax.swing.JFrame {
@@ -19,6 +17,16 @@ public class Window extends javax.swing.JFrame {
      * Numeros disponibles
      */
     public static int[] AVAILABLE = {1, 2, 3, 4, 5, 0};
+
+    /**
+     * Solucion del juego
+     */
+    public static final String SOLUTION = "12345";
+
+    /**
+     * Bandera de solucion de juego
+     */
+    public static boolean SOLVED = false;
 
     public Window() {
 
@@ -48,6 +56,8 @@ public class Window extends javax.swing.JFrame {
         position23 = new javax.swing.JPanel();
         positionButton23 = new javax.swing.JButton();
         controlPanel = new javax.swing.JPanel();
+        labelMovement = new javax.swing.JLabel();
+        labelMovementCounter = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Proyecto 3 - Juego");
@@ -179,15 +189,33 @@ public class Window extends javax.swing.JFrame {
             .addComponent(positionButton23, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
         );
 
+        controlPanel.setPreferredSize(new java.awt.Dimension(130, 39));
+
+        labelMovement.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        labelMovement.setText("Movimientos:");
+
+        labelMovementCounter.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        labelMovementCounter.setText("0");
+
         javax.swing.GroupLayout controlPanelLayout = new javax.swing.GroupLayout(controlPanel);
         controlPanel.setLayout(controlPanelLayout);
         controlPanelLayout.setHorizontalGroup(
             controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 106, Short.MAX_VALUE)
+            .addGroup(controlPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(labelMovement)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelMovementCounter, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6))
         );
         controlPanelLayout.setVerticalGroup(
             controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(controlPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelMovement)
+                    .addComponent(labelMovementCounter))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout positionPanelLayout = new javax.swing.GroupLayout(positionPanel);
@@ -208,7 +236,7 @@ public class Window extends javax.swing.JFrame {
                     .addComponent(position13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(position23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(controlPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(controlPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE))
         );
         positionPanelLayout.setVerticalGroup(
             positionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,7 +256,7 @@ public class Window extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(position21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addComponent(controlPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(controlPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -252,7 +280,26 @@ public class Window extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void positionButtonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_positionButtonKeyPressed
-        move(evt);
+
+        // Verificamos la tecla presionada
+        switch (evt.getKeyCode()) {
+
+            // Si es una tecla de movimiento
+            case KeyEvent.VK_UP:
+            case KeyEvent.VK_DOWN:
+            case KeyEvent.VK_LEFT:
+            case KeyEvent.VK_RIGHT:
+
+                // Realizamos el movimiento de la ficha
+                move(evt);
+
+                // Modificamos la bandera de solucion
+                SOLVED = isSolved();
+
+                break;
+
+        }
+
     }//GEN-LAST:event_positionButtonKeyPressed
 
     public static void main(String args[]) {
@@ -274,7 +321,7 @@ public class Window extends javax.swing.JFrame {
 
     }
 
-    private static int[][] generateMatrix(int rows, int columns) {
+    private int[][] generateMatrix(int rows, int columns) {
 
         // Generador de aleatorios
         Random random = new Random();
@@ -353,6 +400,7 @@ public class Window extends javax.swing.JFrame {
 
                 if (nextROW >= 0) {
                     swap(board, currentROW, currentCOLUMN, nextROW, nextCOLUMN);
+                    updateMovementCounter();
                 }
 
                 break;
@@ -363,6 +411,7 @@ public class Window extends javax.swing.JFrame {
 
                 if (nextROW < MAX_ROWS) {
                     swap(board, currentROW, currentCOLUMN, nextROW, nextCOLUMN);
+                    updateMovementCounter();
                 }
 
                 break;
@@ -373,6 +422,7 @@ public class Window extends javax.swing.JFrame {
 
                 if (nextCOLUMN >= 0) {
                     swap(board, currentROW, currentCOLUMN, nextROW, nextCOLUMN);
+                    updateMovementCounter();
                 }
 
                 break;
@@ -383,6 +433,7 @@ public class Window extends javax.swing.JFrame {
 
                 if (nextCOLUMN < MAX_COLUMNS) {
                     swap(board, currentROW, currentCOLUMN, nextROW, nextCOLUMN);
+                    updateMovementCounter();
                 }
 
                 break;
@@ -393,16 +444,41 @@ public class Window extends javax.swing.JFrame {
 
     private void swap(JButton[][] board, int currentROW, int currentCOLUMN, int nextROW, int nextCOLUMN) {
 
-        board[currentROW][currentCOLUMN].setText(board[nextROW][nextCOLUMN].getText());
+        if (SOLVED == false) {
 
-        board[nextROW][nextCOLUMN].setText("");
-        board[nextROW][nextCOLUMN].requestFocus();
+            board[currentROW][currentCOLUMN].setText(board[nextROW][nextCOLUMN].getText());
+
+            board[nextROW][nextCOLUMN].setText("");
+            board[nextROW][nextCOLUMN].requestFocus();
+
+        }
 
     }
 
+    private void updateMovementCounter() {
+
+        if (SOLVED == false) {
+            labelMovementCounter.setText("" + (Integer.parseInt(labelMovementCounter.getText()) + 1) + "");
+        }
+
+    }
+
+    private boolean isSolved() {
+
+        JButton[] positions = {positionButton11, positionButton12, positionButton13, positionButton21, positionButton22, positionButton23};
+        String content = new String();
+
+        for (JButton position : positions) {
+            content = content + position.getText();
+        }
+
+        return content.equals(SOLUTION);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel controlPanel;
+    private javax.swing.JLabel labelMovement;
+    private javax.swing.JLabel labelMovementCounter;
     private javax.swing.JPanel position11;
     private javax.swing.JPanel position12;
     private javax.swing.JPanel position13;
