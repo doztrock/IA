@@ -23,11 +23,6 @@ public class Window extends javax.swing.JFrame {
      */
     public static final String SOLUTION = "12345";
 
-    /**
-     * Bandera de solucion de juego
-     */
-    public static boolean SOLVED = false;
-
     public Window() {
 
         // Cargamos componentes
@@ -293,9 +288,6 @@ public class Window extends javax.swing.JFrame {
                 // Realizamos el movimiento de la ficha
                 move(evt);
 
-                // Modificamos la bandera de solucion
-                SOLVED = isSolved();
-
                 break;
 
         }
@@ -321,6 +313,14 @@ public class Window extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Funcion encargada de generar la matriz con los numeros aleatorios que
+     * posteriormente se mostraran en la interfaz.
+     *
+     * @param rows Cantidad de filas
+     * @param columns Cantidad de columnas
+     * @return Matriz de numeros
+     */
     private int[][] generateMatrix(int rows, int columns) {
 
         // Generador de aleatorios
@@ -330,31 +330,42 @@ public class Window extends javax.swing.JFrame {
         int[][] matrix = new int[rows][columns];
 
         for (int row = 0; row < rows; row++) {
-
             for (int column = 0; column < columns; column++) {
 
+                // Seleccionamos un numero al azar segun la longitud del arreglo
                 int index = random.nextInt(AVAILABLE.length);
 
+                // Obtenemos un elemento aleatorio
                 matrix[row][column] = AVAILABLE[index];
+
+                // Eliminamos el indice utilizado
                 AVAILABLE = ArrayUtils.remove(AVAILABLE, index);
 
             }
-
         }
 
         return matrix;
     }
 
+    /**
+     * Funcion encargada de mostrar la matriz en el tablero principal de acuerdo
+     * a la cantidad de filas y columnas que se especifican para este caso.
+     */
     private void displayMatrix() {
 
-        int[][] matrix = generateMatrix(MAX_ROWS, MAX_COLUMNS);
+        // Tablero de posiciones
         JButton[][] board = {{positionButton11, positionButton12, positionButton13}, {positionButton21, positionButton22, positionButton23}};
+
+        // Generamos la matriz
+        int[][] matrix = generateMatrix(MAX_ROWS, MAX_COLUMNS);
 
         for (int row = 0; row < MAX_ROWS; row++) {
             for (int column = 0; column < MAX_COLUMNS; column++) {
 
+                // Asignamos el numero a la posicion
                 board[row][column].setText("" + matrix[row][column] + "");
 
+                // Si el numero es 0 dejamos la posicion sin texto
                 if (matrix[row][column] == 0) {
                     board[row][column].setText("");
                     board[row][column].requestFocus();
@@ -365,9 +376,15 @@ public class Window extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Funcion encargada de realizar el moviemiento de la celda que se encuentra
+     * vacia, validando que esta no se pase de los limites del tablero.
+     *
+     * @param key Evento de tecla presionada
+     */
     private void move(KeyEvent key) {
 
-        // Tablero
+        // Tablero de posiciones
         JButton[][] board = {{positionButton11, positionButton12, positionButton13}, {positionButton21, positionButton22, positionButton23}};
 
         // Posicion actual
@@ -381,12 +398,17 @@ public class Window extends javax.swing.JFrame {
         for (int row = 0; row < MAX_ROWS; row++) {
             for (int column = 0; column < MAX_COLUMNS; column++) {
 
+                // Verificamos donde se encuentra la celda vacia
                 if (board[row][column].getText().isEmpty()) {
+
+                    // Guardamos la posicion actual
                     currentROW = row;
                     currentCOLUMN = column;
 
+                    // Asignamos una posicion por defecto
                     nextROW = row;
                     nextCOLUMN = column;
+
                 }
 
             }
@@ -394,6 +416,7 @@ public class Window extends javax.swing.JFrame {
 
         switch (key.getKeyCode()) {
 
+            // Arriba
             case KeyEvent.VK_UP:
 
                 nextROW = currentROW - 1;
@@ -405,6 +428,7 @@ public class Window extends javax.swing.JFrame {
 
                 break;
 
+            // Abajo
             case KeyEvent.VK_DOWN:
 
                 nextROW = currentROW + 1;
@@ -416,6 +440,7 @@ public class Window extends javax.swing.JFrame {
 
                 break;
 
+            // Izquierda
             case KeyEvent.VK_LEFT:
 
                 nextCOLUMN = currentCOLUMN - 1;
@@ -427,6 +452,7 @@ public class Window extends javax.swing.JFrame {
 
                 break;
 
+            // Derecha
             case KeyEvent.VK_RIGHT:
 
                 nextCOLUMN = currentCOLUMN + 1;
@@ -442,9 +468,19 @@ public class Window extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Funcion encargada de realizar el cambio entre celdas, llevando asi a
+     * concluir el movimiento.
+     *
+     * @param board Tablero de posiciones
+     * @param currentROW Fila actual
+     * @param currentCOLUMN Columna actual
+     * @param nextROW Fila nueva
+     * @param nextCOLUMN Columna nueva
+     */
     private void swap(JButton[][] board, int currentROW, int currentCOLUMN, int nextROW, int nextCOLUMN) {
 
-        if (SOLVED == false) {
+        if (isSolved() == false) {
 
             board[currentROW][currentCOLUMN].setText(board[nextROW][nextCOLUMN].getText());
 
@@ -455,14 +491,23 @@ public class Window extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Funcion encargada de actualizar el contador de movimientos.
+     */
     private void updateMovementCounter() {
 
-        if (SOLVED == false) {
+        if (isSolved() == false) {
             labelMovementCounter.setText("" + (Integer.parseInt(labelMovementCounter.getText()) + 1) + "");
         }
 
     }
 
+    /**
+     * Funcion encargada de determinar si el juego se resolvio de manera
+     * correcta.
+     *
+     * @return TRUE si el juego ha sido resuelto, FALSE en caso contrario.
+     */
     private boolean isSolved() {
 
         JButton[] positions = {positionButton11, positionButton12, positionButton13, positionButton21, positionButton22, positionButton23};
