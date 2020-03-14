@@ -3,6 +3,7 @@ package game;
 import java.awt.event.KeyEvent;
 import java.util.Random;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import org.apache.commons.lang3.ArrayUtils;
 
 public class Window extends javax.swing.JFrame {
@@ -21,7 +22,7 @@ public class Window extends javax.swing.JFrame {
     /**
      * Solucion del juego
      */
-    public static final String SOLUTION = "12345";
+    public static final String SOLUTION = "12345 ";
 
     public Window() {
 
@@ -288,6 +289,12 @@ public class Window extends javax.swing.JFrame {
                 // Realizamos el movimiento de la ficha
                 move(evt);
 
+                // Verificamos si ya se resolvio el juego
+                if (isSolved() == true) {
+                    disableBoard();
+                    showCongratulationMessage();
+                }
+
                 break;
 
         }
@@ -343,7 +350,14 @@ public class Window extends javax.swing.JFrame {
 
             }
         }
-
+        /*
+        matrix[0][0] = 1;
+        matrix[0][1] = 2;
+        matrix[0][2] = 3;
+        matrix[1][0] = 0;
+        matrix[1][1] = 4;
+        matrix[1][2] = 5;
+         */
         return matrix;
     }
 
@@ -367,7 +381,7 @@ public class Window extends javax.swing.JFrame {
 
                 // Si el numero es 0 dejamos la posicion sin texto
                 if (matrix[row][column] == 0) {
-                    board[row][column].setText("");
+                    board[row][column].setText(" ");
                     board[row][column].requestFocus();
                 }
 
@@ -399,7 +413,7 @@ public class Window extends javax.swing.JFrame {
             for (int column = 0; column < MAX_COLUMNS; column++) {
 
                 // Verificamos donde se encuentra la celda vacia
-                if (board[row][column].getText().isEmpty()) {
+                if (board[row][column].getText().equals(" ")) {
 
                     // Guardamos la posicion actual
                     currentROW = row;
@@ -484,7 +498,7 @@ public class Window extends javax.swing.JFrame {
 
             board[currentROW][currentCOLUMN].setText(board[nextROW][nextCOLUMN].getText());
 
-            board[nextROW][nextCOLUMN].setText("");
+            board[nextROW][nextCOLUMN].setText(" ");
             board[nextROW][nextCOLUMN].requestFocus();
 
         }
@@ -518,6 +532,27 @@ public class Window extends javax.swing.JFrame {
         }
 
         return content.equals(SOLUTION);
+    }
+
+    /**
+     * Funcion encargada de deshabilitar el tablero.
+     */
+    private void disableBoard() {
+
+        JButton[] positions = {positionButton11, positionButton12, positionButton13, positionButton21, positionButton22, positionButton23};
+
+        for (JButton position : positions) {
+            position.setEnabled(false);
+        }
+
+    }
+
+    /**
+     * Funcion encargada de mostrar el mensaje cuando se consiga resolver el
+     * juego.
+     */
+    private void showCongratulationMessage() {
+        JOptionPane.showMessageDialog(null, "¡Lo has logrado!", "Felicidades", JOptionPane.INFORMATION_MESSAGE);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
