@@ -54,6 +54,11 @@ public class Window extends javax.swing.JFrame {
         controlPanel = new javax.swing.JPanel();
         labelMovement = new javax.swing.JLabel();
         labelMovementCounter = new javax.swing.JLabel();
+        labelComment0 = new javax.swing.JLabel();
+        labelComment1 = new javax.swing.JLabel();
+        labelComment2 = new javax.swing.JLabel();
+        labelComment3 = new javax.swing.JLabel();
+        labelComment4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Proyecto 3 - Juego");
@@ -193,6 +198,26 @@ public class Window extends javax.swing.JFrame {
         labelMovementCounter.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         labelMovementCounter.setText("0");
 
+        labelComment0.setFont(new java.awt.Font("Dialog", 2, 11)); // NOI18N
+        labelComment0.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        labelComment0.setText("Utiliza las teclas de");
+
+        labelComment1.setFont(new java.awt.Font("Dialog", 2, 11)); // NOI18N
+        labelComment1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        labelComment1.setText("movimiento para");
+
+        labelComment2.setFont(new java.awt.Font("Dialog", 2, 11)); // NOI18N
+        labelComment2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        labelComment2.setText("desplazar la ficha");
+
+        labelComment3.setFont(new java.awt.Font("Dialog", 2, 11)); // NOI18N
+        labelComment3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        labelComment3.setText("y conseguir una");
+
+        labelComment4.setFont(new java.awt.Font("Dialog", 2, 11)); // NOI18N
+        labelComment4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        labelComment4.setText("solucion.");
+
         javax.swing.GroupLayout controlPanelLayout = new javax.swing.GroupLayout(controlPanel);
         controlPanel.setLayout(controlPanelLayout);
         controlPanelLayout.setHorizontalGroup(
@@ -203,6 +228,15 @@ public class Window extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelMovementCounter, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6))
+            .addGroup(controlPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelComment0, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelComment1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelComment2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelComment3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelComment4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         controlPanelLayout.setVerticalGroup(
             controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -211,7 +245,17 @@ public class Window extends javax.swing.JFrame {
                 .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelMovement)
                     .addComponent(labelMovementCounter))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
+                .addComponent(labelComment0)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelComment1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelComment2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelComment3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelComment4)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout positionPanelLayout = new javax.swing.GroupLayout(positionPanel);
@@ -557,6 +601,11 @@ public class Window extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel controlPanel;
+    private javax.swing.JLabel labelComment0;
+    private javax.swing.JLabel labelComment1;
+    private javax.swing.JLabel labelComment2;
+    private javax.swing.JLabel labelComment3;
+    private javax.swing.JLabel labelComment4;
     private javax.swing.JLabel labelMovement;
     private javax.swing.JLabel labelMovementCounter;
     private javax.swing.JPanel position11;
