@@ -2,22 +2,39 @@ package solver;
 
 public class Node {
 
-    private int key;
+    /**
+     * Codigo del nodo
+     */
+    private int[][] matrix;
 
+    /**
+     * Nodo previo
+     */
     private Node previous;
-    private Node[] next;
+
+    /**
+     * Nodo siguiente
+     */
+    private Node A;
+    private Node B;
+    private Node C;
 
     public Node() {
+
         this.previous = null;
-        this.next = null;
+
+        this.A = null;
+        this.B = null;
+        this.C = null;
+
     }
 
-    public int getKey() {
-        return key;
+    public int[][] getMatrix() {
+        return matrix;
     }
 
-    public void setKey(int key) {
-        this.key = key;
+    public void setMatrix(int[][] matrix) {
+        this.matrix = matrix;
     }
 
     public Node getPrevious() {
@@ -28,62 +45,28 @@ public class Node {
         this.previous = previous;
     }
 
-    public Node[] getNext() {
-        return next;
+    public Node getA() {
+        return A;
     }
 
-    public void setNext(Node[] next) {
-        this.next = next;
+    public void setA(Node A) {
+        this.A = A;
     }
 
-}
-
-class Runner {
-
-    public static void main(String[] args) {
-
-        Node root = new Node();
-        Node previous = root;
-
-        root.setKey(1);
-        
-        for (int i = 0; i < 10; i++) {
-
-            Node[] next = new Node[10];
-
-            for (int j = 0; j < next.length; j++) {
-
-                next[j] = new Node();
-
-                next[j].setKey((i * 10) + j);
-                next[j].setPrevious(previous);
-
-            }
-
-            previous.setNext(next);
-
-        }
-
-        print(root);
-
+    public Node getB() {
+        return B;
     }
 
-    private static void print(Node root) {
+    public void setB(Node B) {
+        this.B = B;
+    }
 
-        Node iterator = root;
+    public Node getC() {
+        return C;
+    }
 
-        while (iterator != null) {
-
-            System.out.println(iterator.getKey());
-
-            for (Node next : iterator.getNext()) {
-                System.err.println(next.getKey());
-            }
-
-            iterator = null;
-
-        }
-
+    public void setC(Node C) {
+        this.C = C;
     }
 
 }
