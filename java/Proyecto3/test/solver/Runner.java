@@ -1,9 +1,19 @@
 package solver;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 class Runner {
 
+    /**
+     * Dimensiones de la matriz
+     */
+    public static final int MAX_ROWS = 2;
+    public static final int MAX_COLUMNS = 3;
+
+    /**
+     * Esquema de movimientos posibles
+     */
     public static final int[][][] SCHEME = {
         {
             {Direction.DOWN, Direction.RIGHT},
@@ -24,28 +34,39 @@ class Runner {
 
         print(root);
 
-        check();
-
     }
 
-    private static void check() {
+    /**
+     * Genera las posibles soluciones a la matriz dependiendo de donde se
+     * encuentre el elemento cero, que para este caso representara a la celda
+     * que estara vacia.
+     *
+     * @param matrix
+     * @return Listado de matrices con los movimientos posibles
+     */
+    private static ArrayList<int[][]> generateSolution(int[][] matrix) {
 
-        int[][] matrix = {
-            {1, 2, 3},
-            {4, 0, 5}
-        };
+        /**
+         * Listado de soluciones
+         */
+        ArrayList<int[][]> solution = new ArrayList<>();
 
-        int currentRow = 0;
-        int currentColumn = 0;
+        /**
+         * Posicion del elemento cero
+         */
+        int currentROW = 0;
+        int currentCOLUMN = 0;
 
-        // Ubicamos donde esta posicion vacia
-        for (int i = 0; i < 2; i++) {
+        /**
+         * Ubicamos la posicion del elemento cero
+         */
+        for (int row = 0; row < MAX_ROWS; row++) {
 
-            for (int j = 0; j < 3; j++) {
+            for (int column = 0; column < MAX_COLUMNS; column++) {
 
-                if (matrix[i][j] == 0) {
-                    currentRow = i;
-                    currentColumn = j;
+                if (matrix[row][column] == 0) {
+                    currentROW = row;
+                    currentCOLUMN = column;
                     break;
                 }
 
@@ -53,28 +74,15 @@ class Runner {
 
         }
 
-        // Hallamos los posibles movimientos
-        int movement[] = SCHEME[currentRow][currentColumn];
-
-        for (int i = 0; i < movement.length; i++) {
-
-            int[][] solution = move(Arrays.stream(matrix).map(int[]::clone).toArray(int[][]::new), movement[i]);
-
-            System.out.println("========================");
-
-            for (int I = 0; I < 2; I++) {
-
-                for (int J = 0; J < 3; J++) {
-                    System.out.print(solution[I][J]);
-                }
-
-                System.out.println();
-            }
-
-            System.out.println("========================");
-
+        /**
+         * Hallamos los diferentes movimientos que se pueden realizar desde la
+         * posicion en la que se encuentra el elemento cero
+         */
+        for (int direction : SCHEME[currentROW][currentCOLUMN]) {
+            solution.add(move(Arrays.stream(matrix).map(int[]::clone).toArray(int[][]::new), direction));
         }
 
+        return solution;
     }
 
     public static int[][] move(int[][] matrix, int direction) {
