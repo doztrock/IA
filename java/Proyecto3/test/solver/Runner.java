@@ -29,29 +29,43 @@ class Runner {
 
     public static void main(String[] args) {
 
-        Node root = new Node();
-        Node previous;
-
         int[][] matrix = {
-            {1, 2, 3},
-            {0, 4, 5}
+            {3, 0, 4},
+            {1, 5, 2}
         };
 
-        generatePathList(matrix).forEach((path) -> {
+        /**
+         * Listado de nodos
+         */
+        ArrayList<Node> nodeList = new ArrayList<>();
 
-            for (int row = 0; row < MAX_ROWS; row++) {
+        /**
+         * Nodo principal
+         */
+        Node root;
 
-                for (int column = 0; column < MAX_COLUMNS; column++) {
-                    System.out.print(path[row][column]);
-                }
+        root = new Node();
+        root.setMatrix(matrix);
 
-                System.out.println();
+        nodeList.add(root);
 
-            }
+        nodeList.forEach((node) -> {
 
-            System.out.println("===");
+            generatePathList(node.getMatrix()).forEach((path) -> {
+
+                Node next;
+
+                next = new Node();
+                next.setMatrix(path);
+
+                next.setPrevious(node);
+                node.setNext(next);
+
+            });
 
         });
+
+        print(root);
 
     }
 
@@ -230,6 +244,8 @@ class Runner {
 
     private static void print(Node root) {
 
+        System.out.println(root.getNext().size());
+        
     }
 
 }

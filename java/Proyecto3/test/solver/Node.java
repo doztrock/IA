@@ -1,5 +1,7 @@
 package solver;
 
+import java.util.ArrayList;
+
 public class Node {
 
     /**
@@ -15,18 +17,11 @@ public class Node {
     /**
      * Nodo siguiente
      */
-    private Node A;
-    private Node B;
-    private Node C;
+    private final ArrayList<Node> next;
 
     public Node() {
-
         this.previous = null;
-
-        this.A = null;
-        this.B = null;
-        this.C = null;
-
+        this.next = new ArrayList<>();
     }
 
     public int[][] getMatrix() {
@@ -45,28 +40,12 @@ public class Node {
         this.previous = previous;
     }
 
-    public Node getA() {
-        return A;
+    public ArrayList<Node> getNext() {
+        return next;
     }
 
-    public void setA(Node A) {
-        this.A = A;
-    }
-
-    public Node getB() {
-        return B;
-    }
-
-    public void setB(Node B) {
-        this.B = B;
-    }
-
-    public Node getC() {
-        return C;
-    }
-
-    public void setC(Node C) {
-        this.C = C;
+    public void setNext(Node next) {
+        this.next.add(next);
     }
 
 }
