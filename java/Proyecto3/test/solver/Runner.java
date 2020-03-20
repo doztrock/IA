@@ -32,24 +32,43 @@ class Runner {
         Node root = new Node();
         Node previous;
 
-        print(root);
+        int[][] matrix = {
+            {1, 2, 3},
+            {0, 4, 5}
+        };
+
+        generatePathList(matrix).forEach((path) -> {
+
+            for (int row = 0; row < MAX_ROWS; row++) {
+
+                for (int column = 0; column < MAX_COLUMNS; column++) {
+                    System.out.print(path[row][column]);
+                }
+
+                System.out.println();
+
+            }
+
+            System.out.println("===");
+
+        });
 
     }
 
     /**
-     * Genera las posibles soluciones a la matriz dependiendo de donde se
-     * encuentre el elemento cero, que para este caso representara a la celda
+     * Genera los diferentes caminos dependiendo de donde se encuentre el
+     * elemento cero en la matriz, que para este caso representara a la celda
      * que estara vacia.
      *
-     * @param matrix
+     * @param matrix Matriz
      * @return Listado de matrices con los movimientos posibles
      */
-    private static ArrayList<int[][]> generateSolution(int[][] matrix) {
+    private static ArrayList<int[][]> generatePathList(int[][] matrix) {
 
         /**
-         * Listado de soluciones
+         * Listado de caminos
          */
-        ArrayList<int[][]> solution = new ArrayList<>();
+        ArrayList<int[][]> pathList = new ArrayList<>();
 
         /**
          * Posicion del elemento cero
@@ -65,8 +84,13 @@ class Runner {
             for (int column = 0; column < MAX_COLUMNS; column++) {
 
                 if (matrix[row][column] == 0) {
+
+                    /**
+                     * Almacenamos la posicion del elemento cero
+                     */
                     currentROW = row;
                     currentCOLUMN = column;
+
                     break;
                 }
 
@@ -75,14 +99,14 @@ class Runner {
         }
 
         /**
-         * Hallamos los diferentes movimientos que se pueden realizar desde la
-         * posicion en la que se encuentra el elemento cero
+         * Hallamos los diferentes caminos que se pueden tomar desde la posicion
+         * en la que se encuentra el elemento cero
          */
         for (int direction : SCHEME[currentROW][currentCOLUMN]) {
-            solution.add(executeMovement(Arrays.stream(matrix).map(int[]::clone).toArray(int[][]::new), direction));
+            pathList.add(executeMovement(Arrays.stream(matrix).map(int[]::clone).toArray(int[][]::new), direction));
         }
 
-        return solution;
+        return pathList;
     }
 
     /**
@@ -93,7 +117,7 @@ class Runner {
      * @param direction Direccion del movimiento
      * @return Matriz con el movimiento realizado
      */
-    public static int[][] executeMovement(int[][] matrix, int direction) {
+    private static int[][] executeMovement(int[][] matrix, int direction) {
 
         /**
          * Posicion de origen
