@@ -79,19 +79,31 @@ class Runner {
          * posicion en la que se encuentra el elemento cero
          */
         for (int direction : SCHEME[currentROW][currentCOLUMN]) {
-            solution.add(move(Arrays.stream(matrix).map(int[]::clone).toArray(int[][]::new), direction));
+            solution.add(executeMovement(Arrays.stream(matrix).map(int[]::clone).toArray(int[][]::new), direction));
         }
 
         return solution;
     }
 
-    public static int[][] move(int[][] matrix, int direction) {
+    /**
+     * Funcion encargada de realizar el movimiento del elemento cero, en la
+     * direccion asignada.
+     *
+     * @param matrix Matriz
+     * @param direction Direccion del movimiento
+     * @return Matriz con el movimiento realizado
+     */
+    public static int[][] executeMovement(int[][] matrix, int direction) {
 
-        // Posicion actual
+        /**
+         * Posicion de origen
+         */
         int currentROW = 0;
         int currentCOLUMN = 0;
 
-        // Posicion nueva
+        /**
+         * Posicion de destino
+         */
         int nextROW = 0;
         int nextCOLUMN = 0;
 
@@ -101,11 +113,15 @@ class Runner {
 
                 if (matrix[row][column] == 0) {
 
-                    // Guardamos la posicion actual
+                    /**
+                     * Almacenamos la posicion de origen
+                     */
                     currentROW = row;
                     currentCOLUMN = column;
 
-                    // Asignamos una posicion por defecto
+                    /**
+                     * Almacenamos la posicion de destino
+                     */
                     nextROW = row;
                     nextCOLUMN = column;
 
@@ -116,23 +132,40 @@ class Runner {
 
         }
 
+        /**
+         * Dependiendo de la direccion en la que se debe realizar el movimiento,
+         * asignaremos las posiciones de destino y luego realizamos el
+         * intercambio
+         */
         switch (direction) {
 
+            /**
+             * Arriba
+             */
             case Direction.UP:
                 nextROW = currentROW - 1;
                 matrix = swap(matrix, currentROW, currentCOLUMN, nextROW, nextCOLUMN);
                 break;
 
+            /**
+             * Abajo
+             */
             case Direction.DOWN:
                 nextROW = currentROW + 1;
                 matrix = swap(matrix, currentROW, currentCOLUMN, nextROW, nextCOLUMN);
                 break;
 
+            /**
+             * Izquierda
+             */
             case Direction.LEFT:
                 nextCOLUMN = currentCOLUMN - 1;
                 matrix = swap(matrix, currentROW, currentCOLUMN, nextROW, nextCOLUMN);
                 break;
 
+            /**
+             * Derecha
+             */
             case Direction.RIGHT:
                 nextCOLUMN = currentCOLUMN + 1;
                 matrix = swap(matrix, currentROW, currentCOLUMN, nextROW, nextCOLUMN);
@@ -143,11 +176,28 @@ class Runner {
         return matrix;
     }
 
+    /**
+     * Funcion encargada de realizar el intercambio de elementos dentro de la
+     * matriz, es decir, de la posicion actual, a la posicion de destino.
+     *
+     * @param board Matriz
+     * @param currentROW FILA actual
+     * @param currentCOLUMN COLUMNA actual
+     * @param nextROW FILA nueva
+     * @param nextCOLUMN COLUMNA nueva
+     * @return Matriz con el intercambio realizado
+     */
     private static int[][] swap(int[][] matrix, int currentROW, int currentCOLUMN, int nextROW, int nextCOLUMN) {
 
+        /**
+         * Almacenamos los valores actuales
+         */
         int currentVALUE = matrix[currentROW][currentCOLUMN];
         int nextVALUE = matrix[nextROW][nextCOLUMN];
 
+        /**
+         * Realizamos el intercambio
+         */
         matrix[currentROW][currentCOLUMN] = nextVALUE;
         matrix[nextROW][nextCOLUMN] = currentVALUE;
 
