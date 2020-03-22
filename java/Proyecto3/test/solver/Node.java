@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Node {
 
     /**
-     * Codigo del nodo
+     * Matriz del nodo
      */
     private int[][] matrix;
 
@@ -19,9 +19,33 @@ public class Node {
      */
     private final ArrayList<Node> next;
 
+    /**
+     * Contador
+     */
+    private final int counter;
+
     public Node() {
+
         this.previous = null;
         this.next = new ArrayList<>();
+
+        counter = Integer.MIN_VALUE;
+
+    }
+
+    public Node(int[] counter) {
+
+        this.previous = null;
+        this.next = new ArrayList<>();
+
+        if (counter == null) {
+            counter = new int[1];
+            counter[0] = 0;
+        }
+
+        this.counter = counter[0];
+        counter[0]++;
+
     }
 
     public int[][] getMatrix() {
@@ -46,6 +70,10 @@ public class Node {
 
     public void setNext(Node next) {
         this.next.add(next);
+    }
+
+    public int getCounter() {
+        return counter;
     }
 
 }

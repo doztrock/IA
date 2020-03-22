@@ -12,6 +12,11 @@ class Runner {
     public static final int MAX_COLUMNS = 3;
 
     /**
+     * Solucion del juego
+     */
+    public static final String SOLUTION = "123450";
+
+    /**
      * Esquema de movimientos posibles
      */
     public static final int[][][] SCHEME = {
@@ -27,46 +32,67 @@ class Runner {
         }
     };
 
+    public static int[] counter;
+
     public static void main(String[] args) {
 
         int[][] matrix = {
-            {3, 0, 4},
-            {1, 5, 2}
+            {0, 2, 3},
+            {1, 4, 5}
         };
 
         /**
          * Listado de nodos
          */
-        ArrayList<Node> nodeList = new ArrayList<>();
+        ArrayList<Node> list = new ArrayList<>();
 
         /**
          * Nodo principal
          */
         Node root;
 
-        root = new Node();
-        root.setMatrix(matrix);
+        //counter = new int[1];
+        //counter[0] = 0;
+        root = new Node(counter);
 
-        nodeList.add(root);
+        Node one = new Node(counter);
+        Node two = new Node(counter);
+        Node three = new Node(counter);
 
-        nodeList.forEach((node) -> {
+        System.out.println(three.getCounter());
 
-            generatePathList(node.getMatrix()).forEach((path) -> {
+        /*
+        
+         root.setMatrix(matrix);
 
-                Node next;
+         list.add(root);
 
-                next = new Node();
-                next.setMatrix(path);
+         for (int index = 0; index < list.size(); index++) {
 
-                next.setPrevious(node);
-                node.setNext(next);
+         Node node = list.get(index);
 
-            });
+         for (int[][] path : generatePath(node.getMatrix())) {
 
-        });
+         Node next;
 
-        print(root);
+         next = new Node();
+         next.setMatrix(path);
 
+         next.setPrevious(node);
+         node.setNext(next);
+
+         System.out.println(concatenate(path));
+
+         if (concatenate(path).equals(SOLUTION)) {
+         break;
+         }
+
+         }
+
+         list.addAll(node.getNext());
+
+         }
+         */
     }
 
     /**
@@ -77,7 +103,7 @@ class Runner {
      * @param matrix Matriz
      * @return Listado de matrices con los movimientos posibles
      */
-    private static ArrayList<int[][]> generatePathList(int[][] matrix) {
+    private static ArrayList<int[][]> generatePath(int[][] matrix) {
 
         /**
          * Listado de caminos
@@ -242,10 +268,19 @@ class Runner {
         return matrix;
     }
 
-    private static void print(Node root) {
+    private static String concatenate(int[][] path) {
 
-        System.out.println(root.getNext().size());
-        
+        String content = new String();
+
+        for (int row = 0; row < MAX_ROWS; row++) {
+
+            for (int column = 0; column < MAX_COLUMNS; column++) {
+                content = content + path[row][column];
+            }
+
+        }
+
+        return content;
     }
 
 }
