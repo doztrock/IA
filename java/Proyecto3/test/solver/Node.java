@@ -29,7 +29,7 @@ public class Node {
         this.previous = null;
         this.next = new ArrayList<>();
 
-        counter = Integer.MIN_VALUE;
+        counter = 0;
 
     }
 
@@ -37,11 +37,6 @@ public class Node {
 
         this.previous = null;
         this.next = new ArrayList<>();
-
-        if (counter == null) {
-            counter = new int[1];
-            counter[0] = 0;
-        }
 
         this.counter = counter[0];
         counter[0]++;

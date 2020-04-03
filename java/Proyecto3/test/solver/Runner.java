@@ -2,6 +2,8 @@ package solver;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 class Runner {
 
@@ -15,6 +17,11 @@ class Runner {
      * Solucion del juego
      */
     public static final String SOLUTION = "123450";
+
+    /**
+     * Contador de nodos
+     */
+    public static int[] counter = {0};
 
     /**
      * Esquema de movimientos posibles
@@ -32,13 +39,14 @@ class Runner {
         }
     };
 
-    public static int[] counter;
-
     public static void main(String[] args) {
 
+        /**
+         * Matriz
+         */
         int[][] matrix = {
-            {0, 2, 3},
-            {1, 4, 5}
+            {1, 2, 3},
+            {4, 0, 5}
         };
 
         /**
@@ -51,48 +59,49 @@ class Runner {
          */
         Node root;
 
-        //counter = new int[1];
-        //counter[0] = 0;
         root = new Node(counter);
+        root.setMatrix(matrix);
 
-        Node one = new Node(counter);
-        Node two = new Node(counter);
-        Node three = new Node(counter);
+        list.add(root);
 
-        System.out.println(three.getCounter());
+        for (int index = 0; index < list.size(); index++) {
 
-        /*
-        
-         root.setMatrix(matrix);
+            Node node = list.get(index);
 
-         list.add(root);
+            //System.out.println(node.getPrevious() == null ? 0 : node.getPrevious().getCounter()  + " = " + node.getCounter());
+            for (int[][] path : generatePath(node.getMatrix())) {
 
-         for (int index = 0; index < list.size(); index++) {
+                Node next;
 
-         Node node = list.get(index);
+                next = new Node(counter);
+                next.setMatrix(path);
 
-         for (int[][] path : generatePath(node.getMatrix())) {
+                next.setPrevious(node);
+                node.setNext(next);
 
-         Node next;
+                System.out.println(node.getCounter());
+                
+                System.out.println(concatenate(path));
+                
+                if (concatenate(path).equals(SOLUTION)) {
 
-         next = new Node();
-         next.setMatrix(path);
+                    System.out.println("FOUND");
+                    
+                    try {
+                        System.out.println(concatenate(path));
+                        Thread.sleep(10000);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Runner.class.getName()).log(Level.SEVERE, null, ex);
+                    }
 
-         next.setPrevious(node);
-         node.setNext(next);
+                }
 
-         System.out.println(concatenate(path));
+            }
 
-         if (concatenate(path).equals(SOLUTION)) {
-         break;
-         }
+            list.addAll(node.getNext());
 
-         }
+        }
 
-         list.addAll(node.getNext());
-
-         }
-         */
     }
 
     /**
