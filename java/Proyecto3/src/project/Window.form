@@ -63,20 +63,20 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="jButton1" min="-2" pref="90" max="-2" attributes="0"/>
+                          <Component id="position0" min="-2" pref="90" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jButton7" min="-2" pref="90" max="-2" attributes="0"/>
+                          <Component id="position1" min="-2" pref="90" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="jButton6" min="-2" pref="90" max="-2" attributes="0"/>
+                          <Component id="position3" min="-2" pref="90" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jButton5" min="-2" pref="90" max="-2" attributes="0"/>
+                          <Component id="position4" min="-2" pref="90" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jButton8" min="-2" pref="90" max="-2" attributes="0"/>
-                      <Component id="jButton3" min="-2" pref="90" max="-2" attributes="0"/>
+                      <Component id="position2" min="-2" pref="90" max="-2" attributes="0"/>
+                      <Component id="position5" min="-2" pref="90" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -87,15 +87,15 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jButton1" alignment="3" min="-2" pref="90" max="-2" attributes="0"/>
-                      <Component id="jButton7" alignment="3" min="-2" pref="90" max="-2" attributes="0"/>
-                      <Component id="jButton8" alignment="3" min="-2" pref="90" max="-2" attributes="0"/>
+                      <Component id="position0" alignment="3" min="-2" pref="90" max="-2" attributes="0"/>
+                      <Component id="position1" alignment="3" min="-2" pref="90" max="-2" attributes="0"/>
+                      <Component id="position2" alignment="3" min="-2" pref="90" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jButton6" alignment="3" min="-2" pref="90" max="-2" attributes="0"/>
-                      <Component id="jButton5" alignment="3" min="-2" pref="90" max="-2" attributes="0"/>
-                      <Component id="jButton3" alignment="3" min="-2" pref="90" max="-2" attributes="0"/>
+                      <Component id="position3" alignment="3" min="-2" pref="90" max="-2" attributes="0"/>
+                      <Component id="position4" alignment="3" min="-2" pref="90" max="-2" attributes="0"/>
+                      <Component id="position5" alignment="3" min="-2" pref="90" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -103,17 +103,17 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="position0">
         </Component>
-        <Component class="javax.swing.JButton" name="jButton3">
+        <Component class="javax.swing.JButton" name="position5">
         </Component>
-        <Component class="javax.swing.JButton" name="jButton5">
+        <Component class="javax.swing.JButton" name="position4">
         </Component>
-        <Component class="javax.swing.JButton" name="jButton6">
+        <Component class="javax.swing.JButton" name="position3">
         </Component>
-        <Component class="javax.swing.JButton" name="jButton7">
+        <Component class="javax.swing.JButton" name="position1">
         </Component>
-        <Component class="javax.swing.JButton" name="jButton8">
+        <Component class="javax.swing.JButton" name="position2">
         </Component>
       </SubComponents>
     </Container>
@@ -144,6 +144,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Generar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="generateButtonActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
