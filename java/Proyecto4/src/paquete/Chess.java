@@ -153,7 +153,7 @@ public class Chess extends javax.swing.JFrame {
      * @param row Fila
      * @param column Columna
      */
-    public final void putHorse(int row, int column) {
+    private final void putHorse(int row, int column) {
 
         Image horse;
         ImageIcon horseIcon = null;
@@ -178,7 +178,7 @@ public class Chess extends javax.swing.JFrame {
      * @param row Fila
      * @param column Columna
      */
-    public final void putGoal(int row, int column) {
+    private final void putGoal(int row, int column) {
 
         Image goal;
         ImageIcon goalIcon = null;
@@ -203,7 +203,7 @@ public class Chess extends javax.swing.JFrame {
      *
      * @param box Casilla
      */
-    public void clickNormalBox(JButton box) {
+    private void clickNormalBox(JButton box) {
 
         int row = Character.digit(box.getName().charAt(0), 10);
         int column = Character.digit(box.getName().charAt(2), 10);
@@ -227,7 +227,7 @@ public class Chess extends javax.swing.JFrame {
      * @param pathBox
      * @param horseBox
      */
-    public void clickPathBox(JButton pathBox, JButton horseBox) {
+    private void clickPathBox(JButton pathBox, JButton horseBox) {
 
         /**
          * Posicion
@@ -264,7 +264,7 @@ public class Chess extends javax.swing.JFrame {
      * @param row
      * @param column
      */
-    public void clickHorseBox(int row, int column) {
+    private void clickHorseBox(int row, int column) {
 
         // Deshabilitamos el tablero
         disableBoard();
@@ -296,7 +296,7 @@ public class Chess extends javax.swing.JFrame {
      * Objetivo: Definir las acciones que se realizaran una vez que se haga
      * click en la casilla que contiene la meta.
      */
-    public void clickGoalBox() {
+    private void clickGoalBox() {
         JOptionPane.showMessageDialog(null, "Lo has logrado ¡Felicitaciones!");
     }
 
@@ -306,7 +306,7 @@ public class Chess extends javax.swing.JFrame {
      * Objetivo: Habilitar las casillas del tablero.
      *
      */
-    public void enableBoard() {
+    private void enableBoard() {
 
         for (int row = 0; row < this.ROWS; row++) {
             for (int column = 0; column < this.COLUMNS; column++) {
@@ -322,7 +322,7 @@ public class Chess extends javax.swing.JFrame {
      * Objetivo: Deshabilitar las casillas del tablero.
      *
      */
-    public void disableBoard() {
+    private void disableBoard() {
 
         for (int row = 0; row < this.ROWS; row++) {
             for (int column = 0; column < this.COLUMNS; column++) {
@@ -342,7 +342,7 @@ public class Chess extends javax.swing.JFrame {
      * @param column Columna
      * @return ArrayList<>
      */
-    public ArrayList<JButton> generateHorsePath(int row, int column) {
+    private ArrayList<JButton> generateHorsePath(int row, int column) {
 
         ArrayList<JButton> horsePath = new ArrayList<>();
 
