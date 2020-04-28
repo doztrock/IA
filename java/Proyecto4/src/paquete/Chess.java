@@ -2,10 +2,13 @@ package paquete;
 
 import java.awt.Color;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 public class Chess extends javax.swing.JFrame {
 
@@ -116,6 +119,11 @@ public class Chess extends javax.swing.JFrame {
 
                 this.BOARD[row][column] = new JButton();
                 this.BOARD[row][column].setBackground(color);
+                this.BOARD[row][column].setName(row + ":" + column);
+
+                this.BOARD[row][column].addActionListener((ActionEvent event) -> {
+                    click((JButton) event.getSource());
+                });
 
                 this.panel.add(this.BOARD[row][column]);
 
@@ -130,23 +138,23 @@ public class Chess extends javax.swing.JFrame {
      *
      * Objetivo: Colocar el icono del caballo en el tablero.
      *
-     * @param row
-     * @param column
+     * @param row Fila
+     * @param column Columna
      */
     public final void putHorse(int row, int column) {
 
-        /**
-         * Obtenemos la imagen
-         */
-        Image horse = null;
+        Image horse;
+        ImageIcon horseIcon = null;
 
         try {
             horse = ImageIO.read(getClass().getResource("/horse.png"));
+            horseIcon = new ImageIcon(horse);
+            horseIcon.setDescription("HORSE");
         } catch (IOException exception) {
             System.err.println(exception.getMessage());
         }
 
-        this.BOARD[row][column].setIcon(new ImageIcon(horse));
+        this.BOARD[row][column].setIcon(horseIcon);
 
     }
 
@@ -155,23 +163,50 @@ public class Chess extends javax.swing.JFrame {
      *
      * Objetivo: Colocar el icono de la meta en el tablero.
      *
-     * @param row
-     * @param column
+     * @param row Fila
+     * @param column Columna
      */
     public final void putGoal(int row, int column) {
 
-        /**
-         * Obtenemos la imagen
-         */
-        Image goal = null;
+        Image goal;
+        ImageIcon goalIcon = null;
 
         try {
             goal = ImageIO.read(getClass().getResource("/goal.png"));
+            goalIcon = new ImageIcon(goal);
+            goalIcon.setDescription("GOAL");
         } catch (IOException exception) {
             System.err.println(exception.getMessage());
         }
 
-        this.BOARD[row][column].setIcon(new ImageIcon(goal));
+        this.BOARD[row][column].setIcon(goalIcon);
+
+    }
+
+    /**
+     * Funcion: click
+     *
+     * Objetivo: Procesar cuando se haga un click en alguna de las casillas del
+     * tablero.
+     *
+     * @param box Casilla
+     */
+    public void click(JButton box) {
+
+        int row = Character.digit(box.getName().charAt(0), 10);
+        int column = Character.digit(box.getName().charAt(2), 10);
+
+        if (box.getIcon() == null) {
+            return;
+        }
+
+        if (((ImageIcon) box.getIcon()).getDescription().equals("HORSE")) {
+            System.out.println("paquete.Chess.click()");
+        }
+
+        if (((ImageIcon) box.getIcon()).getDescription().equals("GOAL")) {
+
+        }
 
     }
 
