@@ -25,6 +25,11 @@ public class Chess extends javax.swing.JFrame {
      */
     private final JButton[][] BOARD;
 
+    /**
+     * Bandera
+     */
+    private boolean FINISHED = false;
+
     public Chess() {
 
         /**
@@ -211,10 +216,6 @@ public class Chess extends javax.swing.JFrame {
             clickHorseBox(row, column);
         }
 
-        if (((ImageIcon) box.getIcon()).getDescription().equals("GOAL")) {
-            clickGoalBox();
-        }
-
     }
 
     /**
@@ -233,6 +234,18 @@ public class Chess extends javax.swing.JFrame {
          */
         int pathRow = Character.digit(pathBox.getName().charAt(0), 10);
         int pathColumn = Character.digit(pathBox.getName().charAt(2), 10);
+
+        /**
+         * Detectamos si es la casilla de meta
+         */
+        if (pathBox.getIcon() != null) {
+
+            if (((ImageIcon) pathBox.getIcon()).getDescription().equals("GOAL")) {
+                clickGoalBox();
+                FINISHED = true;
+            }
+
+        }
 
         /**
          * Movemos el caballo
@@ -270,6 +283,11 @@ public class Chess extends javax.swing.JFrame {
 
         });
 
+        // Determinamos si se llego a la meta
+        if (FINISHED == true) {
+            disableBoard();
+        }
+
     }
 
     /**
@@ -279,6 +297,7 @@ public class Chess extends javax.swing.JFrame {
      * click en la casilla que contiene la meta.
      */
     public void clickGoalBox() {
+        JOptionPane.showMessageDialog(null, "Lo has logrado ¡Felicitaciones!");
     }
 
     /**
