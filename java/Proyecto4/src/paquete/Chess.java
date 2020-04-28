@@ -3,13 +3,11 @@ package paquete;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 
 public class Chess extends javax.swing.JFrame {
 
@@ -44,7 +42,7 @@ public class Chess extends javax.swing.JFrame {
         /**
          * Colocamos las fichas
          */
-        putHorse(4, 2);
+        putHorse(4, 0);
         putGoal(0, 6);
 
     }
@@ -135,7 +133,7 @@ public class Chess extends javax.swing.JFrame {
     }
 
     /**
-     * Funcion: putHorse
+     * Funcion: putHorse()
      *
      * Objetivo: Colocar el icono del caballo en el tablero.
      *
@@ -160,7 +158,7 @@ public class Chess extends javax.swing.JFrame {
     }
 
     /**
-     * Funcion: putGoal
+     * Funcion: putGoal()
      *
      * Objetivo: Colocar el icono de la meta en el tablero.
      *
@@ -185,7 +183,7 @@ public class Chess extends javax.swing.JFrame {
     }
 
     /**
-     * Funcion: click
+     * Funcion: click()
      *
      * Objetivo: Procesar cuando se haga un click en alguna de las casillas del
      * tablero.
@@ -211,19 +209,37 @@ public class Chess extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Funcion: clickHorseBox()
+     *
+     * Objetivo: Definir las acciones que se realizaran una vez que se haga
+     * click en la casilla que contiene al caballo.
+     *
+     * @param row
+     * @param column
+     */
     public void clickHorseBox(int row, int column) {
 
+        // Deshabilitamos el tablero
         disableBoard();
+
+        // Habilitamos la casilla del caballo
         this.BOARD[row][column].setEnabled(true);
 
+        // Habilitamos las posibles casillas a las que se puede mover el caballo
         generateHorsePath(row, column).forEach((box) -> {
             box.setEnabled(true);
         });
 
     }
 
+    /**
+     * Funcion: clickGoalBox()
+     *
+     * Objetivo: Definir las acciones que se realizaran una vez que se haga
+     * click en la casilla que contiene la meta.
+     */
     public void clickGoalBox() {
-
     }
 
     /**
@@ -258,6 +274,16 @@ public class Chess extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Funcion: generateHorsePath()
+     *
+     * Objetivo: Generar el listado de las posibles casillas a las que se puede
+     * mover el caballo.
+     *
+     * @param row Fila
+     * @param column Columna
+     * @return ArrayList<>
+     */
     public ArrayList<JButton> generateHorsePath(int row, int column) {
 
         ArrayList<JButton> horsePath = new ArrayList<>();
