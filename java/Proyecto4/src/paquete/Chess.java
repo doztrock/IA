@@ -302,6 +302,46 @@ public class Chess extends javax.swing.JFrame {
             }
         }
 
+        // Izquierda ARRIBA
+        int L_U_ROW = row - 1;
+        int L_U_COLUMN = column - 2;
+
+        if (L_U_ROW >= 0 && L_U_ROW <= ROWS) {
+            if (L_U_COLUMN >= 0 && L_U_COLUMN <= COLUMNS) {
+                horsePath.add(this.BOARD[L_U_ROW][L_U_COLUMN]);
+            }
+        }
+
+        // Izquierda ABAJO
+        int L_D_ROW = row + 1;
+        int L_D_COLUMN = column - 2;
+
+        if (L_D_ROW >= 0 && L_D_ROW <= ROWS) {
+            if (L_D_COLUMN >= 0 && L_D_COLUMN <= COLUMNS) {
+                horsePath.add(this.BOARD[L_D_ROW][L_D_COLUMN]);
+            }
+        }
+
+        // Derecha ARRIBA
+        int R_U_ROW = row - 1;
+        int R_U_COLUMN = column + 2;
+
+        if (R_U_ROW >= 0 && R_U_ROW <= ROWS) {
+            if (R_U_COLUMN >= 0 && R_U_COLUMN <= COLUMNS) {
+                horsePath.add(this.BOARD[R_U_ROW][R_U_COLUMN]);
+            }
+        }
+
+        // Derecha ABAJO
+        int R_D_ROW = row + 1;
+        int R_D_COLUMN = column + 2;
+
+        if (R_D_ROW >= 0 && R_D_ROW <= ROWS) {
+            if (R_D_COLUMN >= 0 && R_D_COLUMN <= COLUMNS) {
+                horsePath.add(this.BOARD[R_D_ROW][R_D_COLUMN]);
+            }
+        }
+
         return horsePath;
     }
 
