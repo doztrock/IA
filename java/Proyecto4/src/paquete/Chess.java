@@ -5,6 +5,7 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -28,7 +29,7 @@ public class Chess extends javax.swing.JFrame {
         /**
          * Inicializamos la matriz
          */
-        this.BOARD = new JButton[ROWS][COLUMNS];
+        this.BOARD = new JButton[this.ROWS][this.COLUMNS];
 
         /**
          * Inicializamos los componentes
@@ -38,12 +39,12 @@ public class Chess extends javax.swing.JFrame {
         /**
          * Llenamos el tablero
          */
-        fill(ROWS, COLUMNS);
+        fill();
 
         /**
          * Colocamos las fichas
          */
-        putHorse(7, 2);
+        putHorse(4, 2);
         putGoal(0, 6);
 
     }
@@ -105,16 +106,16 @@ public class Chess extends javax.swing.JFrame {
      * Objectivo: Llenar el panel de botones (casillas).
      *
      */
-    private void fill(int rows, int columns) {
+    private void fill() {
 
         /**
          * Llenamos el tablero
          */
-        for (int row = 0; row < rows; row++) {
+        for (int row = 0; row < this.ROWS; row++) {
 
-            for (int column = 0; column < columns; column++) {
+            for (int column = 0; column < this.COLUMNS; column++) {
 
-                int position = ((row * ROWS) + column);
+                int position = ((row * this.ROWS) + column);
                 Color color = ((row % 2 == 0 ? position : position + 1) % 2 == 0 ? Color.WHITE : Color.BLACK);
 
                 this.BOARD[row][column] = new JButton();
@@ -201,13 +202,107 @@ public class Chess extends javax.swing.JFrame {
         }
 
         if (((ImageIcon) box.getIcon()).getDescription().equals("HORSE")) {
-            System.out.println("paquete.Chess.click()");
+            clickHorseBox(row, column);
         }
 
         if (((ImageIcon) box.getIcon()).getDescription().equals("GOAL")) {
-
+            clickGoalBox();
         }
 
+    }
+
+    public void clickHorseBox(int row, int column) {
+
+        disableBoard();
+        this.BOARD[row][column].setEnabled(true);
+
+        generateHorsePath(row, column).forEach((box) -> {
+            box.setEnabled(true);
+        });
+
+    }
+
+    public void clickGoalBox() {
+
+    }
+
+    /**
+     * Funcion: enableBoard
+     *
+     * Objetivo: Habilitar las casillas del tablero.
+     *
+     */
+    public void enableBoard() {
+
+        for (int row = 0; row < this.ROWS; row++) {
+            for (int column = 0; column < this.COLUMNS; column++) {
+                this.BOARD[row][column].setEnabled(true);
+            }
+        }
+
+    }
+
+    /**
+     * Funcion: disableBoard
+     *
+     * Objetivo: Deshabilitar las casillas del tablero.
+     *
+     */
+    public void disableBoard() {
+
+        for (int row = 0; row < this.ROWS; row++) {
+            for (int column = 0; column < this.COLUMNS; column++) {
+                this.BOARD[row][column].setEnabled(false);
+            }
+        }
+
+    }
+
+    public ArrayList<JButton> generateHorsePath(int row, int column) {
+
+        ArrayList<JButton> horsePath = new ArrayList<>();
+
+        // Arriba IZQUIERDA
+        int U_L_ROW = row - 2;
+        int U_L_COLUMN = column - 1;
+
+        if (U_L_ROW >= 0 && U_L_ROW <= ROWS) {
+            if (U_L_COLUMN >= 0 && U_L_COLUMN <= COLUMNS) {
+                horsePath.add(this.BOARD[U_L_ROW][U_L_COLUMN]);
+            }
+        }
+
+        // Arriba DERECHA
+        int U_R_ROW = row - 2;
+        int U_R_COLUMN = column + 1;
+
+        if (U_R_ROW >= 0 && U_R_ROW <= ROWS) {
+            if (U_R_COLUMN >= 0 && U_R_COLUMN <= COLUMNS) {
+                horsePath.add(this.BOARD[U_R_ROW][U_R_COLUMN]);
+            }
+        }
+
+        // Abajo IZQUIERDA
+        int D_L_ROW = row + 2;
+        int D_L_COLUMN = column - 1;
+
+        if (D_L_ROW >= 0 && D_L_ROW <= ROWS) {
+            if (D_L_COLUMN >= 0 && D_L_COLUMN <= COLUMNS) {
+                horsePath.add(this.BOARD[D_L_ROW][D_L_COLUMN]);
+            }
+        }
+
+        // Abajo DERECHA
+        int D_R_ROW = row + 2;
+        int D_R_COLUMN = column + 1;
+
+        if (D_R_ROW >= 0 && D_R_ROW <= ROWS) {
+            if (D_R_COLUMN >= 0 && D_R_COLUMN <= COLUMNS) {
+                horsePath.add(this.BOARD[D_R_ROW][D_R_COLUMN]);
+            }
+        }
+
+        return horsePath;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
