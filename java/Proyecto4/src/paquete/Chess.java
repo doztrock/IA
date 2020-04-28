@@ -1,29 +1,47 @@
 package paquete;
 
+import java.awt.Color;
+import javax.swing.JButton;
+
 public class Chess extends javax.swing.JFrame {
 
+    /**
+     * Dimensiones del tablero
+     */
+    private final int ROWS = 8;
+    private final int COLUMNS = 8;
+
+    /**
+     * Matriz de tablero
+     */
+    private final JButton[][] BOARD;
+
     public Chess() {
+
+        /**
+         * Inicializamos la matriz
+         */
+        this.BOARD = new JButton[ROWS][COLUMNS];
+
+        /**
+         * Inicializamos los componentes
+         */
         initComponents();
+
+        fill(ROWS, COLUMNS);
+
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        panel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Ajedrez");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 376, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 276, Short.MAX_VALUE)
-        );
+        panel.setLayout(new java.awt.GridLayout(8, 8));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -31,14 +49,14 @@ public class Chess extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -72,7 +90,33 @@ public class Chess extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Funcion: fill()
+     *
+     * Objectivo: Llenar el panel de botones (casillas).
+     *
+     */
+    private void fill(int rows, int columns) {
+
+        for (int row = 0; row < rows; row++) {
+
+            for (int column = 0; column < columns; column++) {
+
+                int position = ((row * ROWS) + column);
+                Color color = ((row % 2 == 0 ? position : position + 1) % 2 == 0 ? Color.WHITE : Color.BLACK);
+
+                this.BOARD[row][column] = new JButton();
+                this.BOARD[row][column].setBackground(color);
+
+                this.panel.add(this.BOARD[row][column]);
+
+            }
+
+        }
+
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel panel;
     // End of variables declaration//GEN-END:variables
 }
