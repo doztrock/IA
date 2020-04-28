@@ -1,6 +1,10 @@
 package paquete;
 
 import java.awt.Color;
+import java.awt.Image;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 public class Chess extends javax.swing.JFrame {
@@ -28,7 +32,16 @@ public class Chess extends javax.swing.JFrame {
          */
         initComponents();
 
+        /**
+         * Llenamos el tablero
+         */
         fill(ROWS, COLUMNS);
+
+        /**
+         * Colocamos las fichas
+         */
+        putHorse(7, 2);
+        putGoal(0, 6);
 
     }
 
@@ -40,6 +53,7 @@ public class Chess extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ajedrez");
+        setResizable(false);
 
         panel.setLayout(new java.awt.GridLayout(8, 8));
 
@@ -49,14 +63,14 @@ public class Chess extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
+                .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
+                .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -72,20 +86,12 @@ public class Chess extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Chess.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Chess.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Chess.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Chess.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Chess().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Chess().setVisible(true);
         });
 
     }
@@ -98,6 +104,9 @@ public class Chess extends javax.swing.JFrame {
      */
     private void fill(int rows, int columns) {
 
+        /**
+         * Llenamos el tablero
+         */
         for (int row = 0; row < rows; row++) {
 
             for (int column = 0; column < columns; column++) {
@@ -113,6 +122,56 @@ public class Chess extends javax.swing.JFrame {
             }
 
         }
+
+    }
+
+    /**
+     * Funcion: putHorse
+     *
+     * Objetivo: Colocar el icono del caballo en el tablero.
+     *
+     * @param row
+     * @param column
+     */
+    public final void putHorse(int row, int column) {
+
+        /**
+         * Obtenemos la imagen
+         */
+        Image horse = null;
+
+        try {
+            horse = ImageIO.read(getClass().getResource("/horse.png"));
+        } catch (IOException exception) {
+            System.err.println(exception.getMessage());
+        }
+
+        this.BOARD[row][column].setIcon(new ImageIcon(horse));
+
+    }
+
+    /**
+     * Funcion: putGoal
+     *
+     * Objetivo: Colocar el icono de la meta en el tablero.
+     *
+     * @param row
+     * @param column
+     */
+    public final void putGoal(int row, int column) {
+
+        /**
+         * Obtenemos la imagen
+         */
+        Image goal = null;
+
+        try {
+            goal = ImageIO.read(getClass().getResource("/goal.png"));
+        } catch (IOException exception) {
+            System.err.println(exception.getMessage());
+        }
+
+        this.BOARD[row][column].setIcon(new ImageIcon(goal));
 
     }
 
