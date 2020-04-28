@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -27,6 +28,11 @@ public class Chess extends javax.swing.JFrame {
     public Chess() {
 
         /**
+         * Gestor de aleatorios
+         */
+        Random random = new Random();
+
+        /**
          * Inicializamos la matriz
          */
         this.BOARD = new JButton[this.ROWS][this.COLUMNS];
@@ -44,8 +50,8 @@ public class Chess extends javax.swing.JFrame {
         /**
          * Colocamos las fichas
          */
-        putHorse(4, 0);
-        putGoal(0, 6);
+        putHorse(random.nextInt(4 - 0) + 0, random.nextInt(8));
+        putGoal(random.nextInt(8 - 4) + 4, random.nextInt(8));
 
     }
 
