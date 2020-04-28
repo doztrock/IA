@@ -3,11 +3,13 @@ package paquete;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 public class Chess extends javax.swing.JFrame {
 
@@ -121,7 +123,7 @@ public class Chess extends javax.swing.JFrame {
                 this.BOARD[row][column].setName(row + ":" + column);
 
                 this.BOARD[row][column].addActionListener((ActionEvent event) -> {
-                    click((JButton) event.getSource());
+                    clickNormalBox((JButton) event.getSource());
                 });
 
                 this.panel.add(this.BOARD[row][column]);
@@ -183,14 +185,14 @@ public class Chess extends javax.swing.JFrame {
     }
 
     /**
-     * Funcion: click()
+     * Funcion: clickNormalBox()
      *
      * Objetivo: Procesar cuando se haga un click en alguna de las casillas del
      * tablero.
      *
      * @param box Casilla
      */
-    public void click(JButton box) {
+    public void clickNormalBox(JButton box) {
 
         int row = Character.digit(box.getName().charAt(0), 10);
         int column = Character.digit(box.getName().charAt(2), 10);
@@ -206,6 +208,31 @@ public class Chess extends javax.swing.JFrame {
         if (((ImageIcon) box.getIcon()).getDescription().equals("GOAL")) {
             clickGoalBox();
         }
+
+    }
+
+    /**
+     * Funcion: clickNormalBox()
+     *
+     * Objetivo: Procesar cuando se haga un click en alguna de las posibles
+     * casillas de movimiento.
+     *
+     * @param pathBox
+     * @param horseBox
+     */
+    public void clickPathBox(JButton pathBox, JButton horseBox) {
+
+        /**
+         * Posicion
+         */
+        int pathRow = Character.digit(pathBox.getName().charAt(0), 10);
+        int pathColumn = Character.digit(pathBox.getName().charAt(2), 10);
+
+        /**
+         * Movemos el caballo
+         */
+        horseBox.setIcon(null);
+        putHorse(pathRow, pathColumn);
 
     }
 
@@ -228,7 +255,13 @@ public class Chess extends javax.swing.JFrame {
 
         // Habilitamos las posibles casillas a las que se puede mover el caballo
         generateHorsePath(row, column).forEach((box) -> {
+
             box.setEnabled(true);
+
+            box.addActionListener((ActionEvent event) -> {
+                clickPathBox((JButton) event.getSource(), this.BOARD[row][column]);
+            });
+
         });
 
     }
@@ -292,8 +325,8 @@ public class Chess extends javax.swing.JFrame {
         int U_L_ROW = row - 2;
         int U_L_COLUMN = column - 1;
 
-        if (U_L_ROW >= 0 && U_L_ROW <= ROWS) {
-            if (U_L_COLUMN >= 0 && U_L_COLUMN <= COLUMNS) {
+        if (U_L_ROW >= 0 && U_L_ROW < ROWS) {
+            if (U_L_COLUMN >= 0 && U_L_COLUMN < COLUMNS) {
                 horsePath.add(this.BOARD[U_L_ROW][U_L_COLUMN]);
             }
         }
@@ -302,8 +335,8 @@ public class Chess extends javax.swing.JFrame {
         int U_R_ROW = row - 2;
         int U_R_COLUMN = column + 1;
 
-        if (U_R_ROW >= 0 && U_R_ROW <= ROWS) {
-            if (U_R_COLUMN >= 0 && U_R_COLUMN <= COLUMNS) {
+        if (U_R_ROW >= 0 && U_R_ROW < ROWS) {
+            if (U_R_COLUMN >= 0 && U_R_COLUMN < COLUMNS) {
                 horsePath.add(this.BOARD[U_R_ROW][U_R_COLUMN]);
             }
         }
@@ -312,8 +345,8 @@ public class Chess extends javax.swing.JFrame {
         int D_L_ROW = row + 2;
         int D_L_COLUMN = column - 1;
 
-        if (D_L_ROW >= 0 && D_L_ROW <= ROWS) {
-            if (D_L_COLUMN >= 0 && D_L_COLUMN <= COLUMNS) {
+        if (D_L_ROW >= 0 && D_L_ROW < ROWS) {
+            if (D_L_COLUMN >= 0 && D_L_COLUMN < COLUMNS) {
                 horsePath.add(this.BOARD[D_L_ROW][D_L_COLUMN]);
             }
         }
@@ -322,8 +355,8 @@ public class Chess extends javax.swing.JFrame {
         int D_R_ROW = row + 2;
         int D_R_COLUMN = column + 1;
 
-        if (D_R_ROW >= 0 && D_R_ROW <= ROWS) {
-            if (D_R_COLUMN >= 0 && D_R_COLUMN <= COLUMNS) {
+        if (D_R_ROW >= 0 && D_R_ROW < ROWS) {
+            if (D_R_COLUMN >= 0 && D_R_COLUMN < COLUMNS) {
                 horsePath.add(this.BOARD[D_R_ROW][D_R_COLUMN]);
             }
         }
@@ -332,8 +365,8 @@ public class Chess extends javax.swing.JFrame {
         int L_U_ROW = row - 1;
         int L_U_COLUMN = column - 2;
 
-        if (L_U_ROW >= 0 && L_U_ROW <= ROWS) {
-            if (L_U_COLUMN >= 0 && L_U_COLUMN <= COLUMNS) {
+        if (L_U_ROW >= 0 && L_U_ROW < ROWS) {
+            if (L_U_COLUMN >= 0 && L_U_COLUMN < COLUMNS) {
                 horsePath.add(this.BOARD[L_U_ROW][L_U_COLUMN]);
             }
         }
@@ -342,8 +375,8 @@ public class Chess extends javax.swing.JFrame {
         int L_D_ROW = row + 1;
         int L_D_COLUMN = column - 2;
 
-        if (L_D_ROW >= 0 && L_D_ROW <= ROWS) {
-            if (L_D_COLUMN >= 0 && L_D_COLUMN <= COLUMNS) {
+        if (L_D_ROW >= 0 && L_D_ROW < ROWS) {
+            if (L_D_COLUMN >= 0 && L_D_COLUMN < COLUMNS) {
                 horsePath.add(this.BOARD[L_D_ROW][L_D_COLUMN]);
             }
         }
@@ -352,8 +385,8 @@ public class Chess extends javax.swing.JFrame {
         int R_U_ROW = row - 1;
         int R_U_COLUMN = column + 2;
 
-        if (R_U_ROW >= 0 && R_U_ROW <= ROWS) {
-            if (R_U_COLUMN >= 0 && R_U_COLUMN <= COLUMNS) {
+        if (R_U_ROW >= 0 && R_U_ROW < ROWS) {
+            if (R_U_COLUMN >= 0 && R_U_COLUMN < COLUMNS) {
                 horsePath.add(this.BOARD[R_U_ROW][R_U_COLUMN]);
             }
         }
@@ -362,8 +395,8 @@ public class Chess extends javax.swing.JFrame {
         int R_D_ROW = row + 1;
         int R_D_COLUMN = column + 2;
 
-        if (R_D_ROW >= 0 && R_D_ROW <= ROWS) {
-            if (R_D_COLUMN >= 0 && R_D_COLUMN <= COLUMNS) {
+        if (R_D_ROW >= 0 && R_D_ROW < ROWS) {
+            if (R_D_COLUMN >= 0 && R_D_COLUMN < COLUMNS) {
                 horsePath.add(this.BOARD[R_D_ROW][R_D_COLUMN]);
             }
         }
