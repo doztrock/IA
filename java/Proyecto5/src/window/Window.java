@@ -5,19 +5,47 @@
  */
 package window;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+
 /**
  *
  * @author Ivan
  */
 public class Window extends javax.swing.JFrame {
 
-    
-    
+    /**
+     * Dimensiones del tablero
+     */
+    public static final int ROWS = 3;
+    public static final int COLUMNS = 3;
+
+    /**
+     * Tablero
+     */
+    public JButton[][] BOARD;
+
     /**
      * Creates new form Window
      */
     public Window() {
+
+        /**
+         * Inicializamos el tablero
+         */
+        BOARD = new JButton[ROWS][COLUMNS];
+
+        /**
+         * Inicializamos los componentes
+         */
         initComponents();
+
+        /**
+         * Dibujamos el tablero
+         */
+        draw();
+
     }
 
     /**
@@ -32,6 +60,8 @@ public class Window extends javax.swing.JFrame {
         panel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Proyecto 5");
+        setResizable(false);
 
         panel.setLayout(new java.awt.GridLayout(3, 3));
 
@@ -41,14 +71,14 @@ public class Window extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -88,6 +118,56 @@ public class Window extends javax.swing.JFrame {
                 new Window().setVisible(true);
             }
         });
+    }
+
+    private void draw() {
+
+        for (int row = 0; row < ROWS; row++) {
+
+            for (int column = 0; column < COLUMNS; column++) {
+
+                BOARD[row][column] = new JButton();
+                BOARD[row][column].setName(row + "" + column);
+
+                BOARD[row][column].addActionListener((ActionEvent event) -> {
+                    this.click((JButton) event.getSource());
+                });
+
+                this.panel.add(BOARD[row][column]);
+
+            }
+
+        }
+
+    }
+
+    private void click(JButton position) {
+        playHuman(position);
+        playMachine();
+    }
+
+    private void playHuman(JButton position) {
+        position.setText("X");
+        position.setEnabled(false);
+    }
+
+    private void playMachine() {
+
+        for (int row = 0; row < ROWS; row++) {
+
+            for (int column = 0; column < COLUMNS; column++) {
+
+                JButton position = BOARD[row][column];
+
+                if (position.isEnabled() == true) {
+                    position.setText("O");
+                    position.setEnabled(false);
+                    return;
+                }
+
+            }
+        }
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
