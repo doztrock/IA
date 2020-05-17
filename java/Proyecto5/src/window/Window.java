@@ -142,6 +142,8 @@ public class Window extends javax.swing.JFrame {
             }
         }
 
+        enableBoard();
+
     }
 
     private void draw() {
@@ -166,19 +168,10 @@ public class Window extends javax.swing.JFrame {
     private void clickHandler(JButton cell) {
 
         playHuman(cell);
+        checkGameFinished();
+
         playMachine();
-
-        switch (checkWinner()) {
-
-            case WINNER_HUMAN:
-                showMessageForHuman();
-                break;
-
-            case WINNER_MACHINE:
-                showMessageForMachine();
-                break;
-
-        }
+        checkGameFinished();
 
     }
 
@@ -227,7 +220,7 @@ public class Window extends javax.swing.JFrame {
 
     }
 
-    public ArrayList<JButton> getFreeCells() {
+    private ArrayList<JButton> getFreeCells() {
 
         ArrayList<JButton> freeCells = new ArrayList<>();
 
@@ -244,6 +237,24 @@ public class Window extends javax.swing.JFrame {
         }
 
         return freeCells;
+    }
+
+    private void checkGameFinished() {
+
+        switch (checkWinner()) {
+
+            case WINNER_HUMAN:
+                showMessageForHuman();
+                disableBoard();
+                break;
+
+            case WINNER_MACHINE:
+                showMessageForMachine();
+                disableBoard();
+                break;
+
+        }
+
     }
 
     private int checkWinner() {
@@ -282,6 +293,26 @@ public class Window extends javax.swing.JFrame {
 
     private void showMessageForMachine() {
         JOptionPane.showMessageDialog(null, "¡Ha ganado la maquina!", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void enableBoard() {
+
+        for (int row = 0; row < ROWS; row++) {
+            for (int column = 0; column < COLUMNS; column++) {
+                BOARD[row][column].setEnabled(true);
+            }
+        }
+
+    }
+
+    public void disableBoard() {
+
+        for (int row = 0; row < ROWS; row++) {
+            for (int column = 0; column < COLUMNS; column++) {
+                BOARD[row][column].setEnabled(false);
+            }
+        }
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
