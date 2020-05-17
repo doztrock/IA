@@ -5,6 +5,8 @@
  */
 package window;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -208,8 +210,21 @@ public class Window extends javax.swing.JFrame {
     }
 
     private void put(String element, int row, int column) {
-        BOARD[row][column].setText(element);
-        BOARD[row][column].setEnabled(false);
+
+        if (element.equals("X")) {
+            BOARD[row][column].setFont(new Font("Comic Sans MS", Font.BOLD, 64));
+            BOARD[row][column].setForeground(Color.RED);
+            BOARD[row][column].setText(element);
+            BOARD[row][column].setEnabled(false);
+        }
+
+        if (element.equals("O")) {
+            BOARD[row][column].setFont(new Font("Comic Sans MS", Font.BOLD, 64));
+            BOARD[row][column].setForeground(Color.BLUE);
+            BOARD[row][column].setText(element);
+            BOARD[row][column].setEnabled(false);
+        }
+
     }
 
     public ArrayList<JButton> getFreeCells() {
