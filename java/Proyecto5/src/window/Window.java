@@ -8,7 +8,6 @@ package window;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JButton;
@@ -134,10 +133,8 @@ public class Window extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Window().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Window().setVisible(true);
         });
     }
 
