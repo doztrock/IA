@@ -39,6 +39,13 @@ public class Window extends javax.swing.JFrame {
     public static final int WINNER_MACHINE = 2;
 
     /**
+     * Estados de ejecucion
+     */
+    public static final int GAME_STARTED = 0;
+    public static final int GAME_FINISHED = 1;
+    public static int GAME_STATE = GAME_STARTED;
+
+    /**
      * Creates new form Window
      */
     public Window() {
@@ -167,11 +174,15 @@ public class Window extends javax.swing.JFrame {
 
     private void clickHandler(JButton cell) {
 
-        playHuman(cell);
-        checkGameFinished();
+        if (GAME_STATE == GAME_STARTED) {
+            playHuman(cell);
+            checkGameFinished();
+        }
 
-        playMachine();
-        checkGameFinished();
+        if (GAME_STATE == GAME_STARTED) {
+            playMachine();
+            checkGameFinished();
+        }
 
     }
 
@@ -246,11 +257,13 @@ public class Window extends javax.swing.JFrame {
             case WINNER_HUMAN:
                 showMessageForHuman();
                 disableBoard();
+                GAME_STATE = GAME_FINISHED;
                 break;
 
             case WINNER_MACHINE:
                 showMessageForMachine();
                 disableBoard();
+                GAME_STATE = GAME_FINISHED;
                 break;
 
         }
