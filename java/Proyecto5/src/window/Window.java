@@ -7,6 +7,8 @@ package window;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Random;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
@@ -178,28 +180,55 @@ public class Window extends javax.swing.JFrame {
 
     }
 
-    private void playHuman(JButton position) {
-        position.setText("X");
-        position.setEnabled(false);
+    private void playHuman(JButton cell) {
+
+        int row = Character.getNumericValue(cell.getName().charAt(0));
+        int column = Character.getNumericValue(cell.getName().charAt(1));
+
+        put("X", row, column);
+
     }
 
     private void playMachine() {
 
-        for (int row = 0; row < ROWS; row++) {
+        Random random = new Random();
+        ArrayList<JButton> freeCells = this.getFreeCells();
 
+        if (freeCells.size() > 0) {
+
+            JButton cell = freeCells.get(random.nextInt(freeCells.size()));
+
+            int row = Character.getNumericValue(cell.getName().charAt(0));
+            int column = Character.getNumericValue(cell.getName().charAt(1));
+
+            put("O", row, column);
+
+        }
+
+    }
+
+    private void put(String element, int row, int column) {
+        BOARD[row][column].setText(element);
+        BOARD[row][column].setEnabled(false);
+    }
+
+    public ArrayList<JButton> getFreeCells() {
+
+        ArrayList<JButton> freeCells = new ArrayList<>();
+
+        for (int row = 0; row < ROWS; row++) {
             for (int column = 0; column < COLUMNS; column++) {
 
-                JButton position = BOARD[row][column];
+                JButton cell = BOARD[row][column];
 
-                if (position.isEnabled() == true) {
-                    position.setText("O");
-                    position.setEnabled(false);
-                    return;
+                if (cell.isEnabled()) {
+                    freeCells.add(cell);
                 }
 
             }
         }
 
+        return freeCells;
     }
 
     private int checkWinner() {
