@@ -8,6 +8,7 @@ package window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -27,6 +28,13 @@ public class Window extends javax.swing.JFrame {
     public JButton[][] BOARD;
 
     /**
+     * Estados del juego
+     */
+    public static final int WINNER_UNDEFINED = 0;
+    public static final int WINNER_HUMAN = 1;
+    public static final int WINNER_MACHINE = 2;
+
+    /**
      * Creates new form Window
      */
     public Window() {
@@ -40,6 +48,11 @@ public class Window extends javax.swing.JFrame {
          * Inicializamos los componentes
          */
         initComponents();
+
+        /**
+         * Inicializamos las celdas del tablero
+         */
+        initBoard();
 
         /**
          * Dibujamos el tablero
@@ -85,9 +98,6 @@ public class Window extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -120,30 +130,52 @@ public class Window extends javax.swing.JFrame {
         });
     }
 
-    private void draw() {
+    private void initBoard() {
 
         for (int row = 0; row < ROWS; row++) {
-
             for (int column = 0; column < COLUMNS; column++) {
-
                 BOARD[row][column] = new JButton();
-                BOARD[row][column].setName(row + "" + column);
-
-                BOARD[row][column].addActionListener((ActionEvent event) -> {
-                    this.click((JButton) event.getSource());
-                });
-
-                this.panel.add(BOARD[row][column]);
-
             }
-
         }
 
     }
 
-    private void click(JButton position) {
-        playHuman(position);
+    private void draw() {
+
+        for (int row = 0; row < ROWS; row++) {
+            for (int column = 0; column < COLUMNS; column++) {
+
+                JButton cell = BOARD[row][column];
+
+                cell.setName(row + "" + column);
+                cell.addActionListener((ActionEvent event) -> {
+                    this.clickHandler(cell);
+                });
+
+                this.panel.add(cell);
+
+            }
+        }
+
+    }
+
+    private void clickHandler(JButton cell) {
+
+        playHuman(cell);
         playMachine();
+
+        switch (checkWinner()) {
+
+            case WINNER_HUMAN:
+                showMessageForHuman();
+                break;
+
+            case WINNER_MACHINE:
+                showMessageForMachine();
+                break;
+
+        }
+
     }
 
     private void playHuman(JButton position) {
@@ -168,6 +200,44 @@ public class Window extends javax.swing.JFrame {
             }
         }
 
+    }
+
+    private int checkWinner() {
+
+        JButton[][] pathList = {
+            {BOARD[0][0], BOARD[0][1], BOARD[0][2]},
+            {BOARD[1][0], BOARD[1][1], BOARD[1][2]},
+            {BOARD[2][0], BOARD[2][1], BOARD[2][2]},
+            {BOARD[0][0], BOARD[1][0], BOARD[2][0]},
+            {BOARD[0][1], BOARD[1][1], BOARD[2][1]},
+            {BOARD[0][2], BOARD[1][2], BOARD[2][2]},
+            {BOARD[0][0], BOARD[1][1], BOARD[2][2]},
+            {BOARD[0][2], BOARD[1][1], BOARD[2][0]}
+        };
+
+        for (JButton[] path : pathList) {
+
+            String result = path[0].getText() + path[1].getText() + path[2].getText();
+
+            if (result.equals("XXX")) {
+                return WINNER_HUMAN;
+            }
+
+            if (result.equals("OOO")) {
+                return WINNER_MACHINE;
+            }
+
+        }
+
+        return WINNER_UNDEFINED;
+    }
+
+    private void showMessageForHuman() {
+        JOptionPane.showMessageDialog(null, "¡Has ganado!", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void showMessageForMachine() {
+        JOptionPane.showMessageDialog(null, "¡Ha ganado la maquina!", "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
