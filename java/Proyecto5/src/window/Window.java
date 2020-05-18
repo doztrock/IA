@@ -20,6 +20,20 @@ import javax.swing.JOptionPane;
 public class Window extends javax.swing.JFrame {
 
     /**
+     * Definicion de GameResult
+     */
+    public static enum GameResult {
+        UNDEFINED, HUMAN, MACHINE, DRAW
+    };
+
+    /**
+     * Definicion de GameState
+     */
+    public static enum GameState {
+        RUNNING, STOPPED
+    };
+
+    /**
      * Dimensiones del tablero
      */
     public static final int ROWS = 3;
@@ -31,18 +45,9 @@ public class Window extends javax.swing.JFrame {
     public JButton[][] BOARD;
 
     /**
-     * Estados del juego
+     * Estado del juego
      */
-    public static final int WINNER_UNDEFINED = 0;
-    public static final int WINNER_HUMAN = 1;
-    public static final int WINNER_MACHINE = 2;
-
-    /**
-     * Estados de ejecucion
-     */
-    public static final int GAME_STARTED = 0;
-    public static final int GAME_FINISHED = 1;
-    public static int GAME_STATE = GAME_STARTED;
+    public static GameState gameState = GameState.RUNNING;
 
     /**
      * Creates new form Window
@@ -171,14 +176,14 @@ public class Window extends javax.swing.JFrame {
 
     private void clickHandler(JButton cell) {
 
-        if (GAME_STATE == GAME_STARTED) {
+        if (gameState == GameState.RUNNING) {
             playHuman(cell);
-            checkGameFinished();
+            checkGameResult();
         }
 
-        if (GAME_STATE == GAME_STARTED) {
+        if (gameState == GameState.RUNNING) {
             playMachine();
-            checkGameFinished();
+            checkGameResult();
         }
 
     }
@@ -247,27 +252,33 @@ public class Window extends javax.swing.JFrame {
         return freeCells;
     }
 
-    private void checkGameFinished() {
+    private void checkGameResult() {
 
-        switch (checkWinner()) {
+        switch (getGameResult()) {
 
-            case WINNER_HUMAN:
+            case HUMAN:
                 showMessageForHuman();
                 disableBoard();
-                GAME_STATE = GAME_FINISHED;
+                gameState = GameState.STOPPED;
                 break;
 
-            case WINNER_MACHINE:
+            case MACHINE:
                 showMessageForMachine();
                 disableBoard();
-                GAME_STATE = GAME_FINISHED;
+                gameState = GameState.STOPPED;
+                break;
+
+            case DRAW:
+                showMessageForDraw();
+                disableBoard();
+                gameState = GameState.STOPPED;
                 break;
 
         }
 
     }
 
-    private int checkWinner() {
+    private GameResult getGameResult() {
 
         JButton[][] pathList = {
             {BOARD[0][0], BOARD[0][1], BOARD[0][2]},
@@ -285,16 +296,20 @@ public class Window extends javax.swing.JFrame {
             String result = path[0].getText() + path[1].getText() + path[2].getText();
 
             if (result.equals("XXX")) {
-                return WINNER_HUMAN;
+                return GameResult.HUMAN;
             }
 
             if (result.equals("OOO")) {
-                return WINNER_MACHINE;
+                return GameResult.MACHINE;
             }
 
         }
 
-        return WINNER_UNDEFINED;
+        if (this.getFreeCells().isEmpty()) {
+            return GameResult.DRAW;
+        }
+
+        return GameResult.UNDEFINED;
     }
 
     private void showMessageForHuman() {
@@ -302,7 +317,11 @@ public class Window extends javax.swing.JFrame {
     }
 
     private void showMessageForMachine() {
-        JOptionPane.showMessageDialog(null, "¡Ha ganado la maquina!", "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "¡Ha ganado la maquina!", "Informacion", JOptionPane.ERROR_MESSAGE);
+    }
+
+    private void showMessageForDraw() {
+        JOptionPane.showMessageDialog(null, "¡Es un empate!", "Informacion", JOptionPane.WARNING_MESSAGE);
     }
 
     public void enableBoard() {
