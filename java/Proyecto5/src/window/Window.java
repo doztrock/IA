@@ -9,15 +9,32 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Ivan
- */
 public class Window extends javax.swing.JFrame {
+
+    public class JButtonHidden {
+
+        private final JButton cell;
+        private final char value;
+
+        public JButtonHidden(JButton cell, char value) {
+            this.cell = cell;
+            this.value = value;
+        }
+
+        public JButton getCell() {
+            return cell;
+        }
+
+        public char getValue() {
+            return value;
+        }
+
+    }
 
     /**
      * Definicion de GameResult
@@ -45,6 +62,11 @@ public class Window extends javax.swing.JFrame {
     public JButton[][] BOARD;
 
     /**
+     * Tablero oculto
+     */
+    public JButtonHidden[][] HIDDEN_BOARD;
+
+    /**
      * Estado del juego
      */
     public static GameState gameState = GameState.RUNNING;
@@ -58,6 +80,10 @@ public class Window extends javax.swing.JFrame {
          * Inicializamos el tablero
          */
         BOARD = new JButton[ROWS][COLUMNS];
+        /**
+         * Inicializamos el tablero oculto
+         */
+        HIDDEN_BOARD = new JButtonHidden[ROWS][COLUMNS];
 
         /**
          * Inicializamos los componentes
@@ -199,6 +225,75 @@ public class Window extends javax.swing.JFrame {
 
     private void playMachine() {
 
+        /**
+         * Asignamos los valores en el tablero oculto
+         */
+        for (int row = 0; row < ROWS; row++) {
+            for (int column = 0; column < COLUMNS; column++) {
+
+                if (BOARD[row][column].getText().isEmpty()) {
+                    HIDDEN_BOARD[row][column] = new JButtonHidden(BOARD[row][column], 'o');
+                } else {
+                    HIDDEN_BOARD[row][column] = new JButtonHidden(BOARD[row][column], BOARD[row][column].getText().charAt(0));
+                }
+
+            }
+        }
+
+        /**
+         * Creamos el listado de posibles caminos en el tablero oculto
+         */
+        JButtonHidden[][] pathList = {
+            {HIDDEN_BOARD[0][0], HIDDEN_BOARD[0][1], HIDDEN_BOARD[0][2]},
+            {HIDDEN_BOARD[1][0], HIDDEN_BOARD[1][1], HIDDEN_BOARD[1][2]},
+            {HIDDEN_BOARD[2][0], HIDDEN_BOARD[2][1], HIDDEN_BOARD[2][2]},
+            {HIDDEN_BOARD[0][0], HIDDEN_BOARD[1][0], HIDDEN_BOARD[2][0]},
+            {HIDDEN_BOARD[0][1], HIDDEN_BOARD[1][1], HIDDEN_BOARD[2][1]},
+            {HIDDEN_BOARD[0][2], HIDDEN_BOARD[1][2], HIDDEN_BOARD[2][2]},
+            {HIDDEN_BOARD[0][0], HIDDEN_BOARD[1][1], HIDDEN_BOARD[2][2]},
+            {HIDDEN_BOARD[0][2], HIDDEN_BOARD[1][1], HIDDEN_BOARD[2][0]}
+        };
+
+        /**
+         * Movemos de acuerdo a la regla
+         */
+        for (JButtonHidden[] path : pathList) {
+
+            if (path[0].getValue() == 'o' && path[1].getValue() == 'O' && path[2].getValue() == 'O') {
+                put("O", path[0].getCell());
+                return;
+            }
+
+            if (path[0].getValue() == 'O' && path[1].getValue() == 'o' && path[2].getValue() == 'O') {
+                put("O", path[1].getCell());
+                return;
+            }
+
+            if (path[0].getValue() == 'O' && path[1].getValue() == 'O' && path[2].getValue() == 'o') {
+                put("O", path[2].getCell());
+                return;
+            }
+
+            if (path[0].getValue() == 'o' && path[1].getValue() == 'X' && path[2].getValue() == 'X') {
+                put("O", path[0].getCell());
+                return;
+            }
+
+            if (path[0].getValue() == 'X' && path[1].getValue() == 'o' && path[2].getValue() == 'X') {
+                put("O", path[1].getCell());
+                return;
+            }
+
+            if (path[0].getValue() == 'X' && path[1].getValue() == 'X' && path[2].getValue() == 'o') {
+                put("O", path[2].getCell());
+                return;
+            }
+
+        }
+
+        /**
+         * Movemos de manera aleatoria
+         */
         Random random = new Random();
         ArrayList<JButton> freeCells = this.getFreeCells();
 
@@ -229,6 +324,24 @@ public class Window extends javax.swing.JFrame {
             BOARD[row][column].setForeground(Color.BLUE);
             BOARD[row][column].setText(element);
             BOARD[row][column].setEnabled(false);
+        }
+
+    }
+
+    private void put(String element, JButton cell) {
+
+        if (element.equals("X")) {
+            cell.setFont(new Font("Comic Sans MS", Font.BOLD, 64));
+            cell.setForeground(Color.RED);
+            cell.setText(element);
+            cell.setEnabled(false);
+        }
+
+        if (element.equals("O")) {
+            cell.setFont(new Font("Comic Sans MS", Font.BOLD, 64));
+            cell.setForeground(Color.BLUE);
+            cell.setText(element);
+            cell.setEnabled(false);
         }
 
     }
@@ -280,6 +393,9 @@ public class Window extends javax.swing.JFrame {
 
     private GameResult getGameResult() {
 
+        /**
+         * Creamos el listado de posibles caminos en el tablero
+         */
         JButton[][] pathList = {
             {BOARD[0][0], BOARD[0][1], BOARD[0][2]},
             {BOARD[1][0], BOARD[1][1], BOARD[1][2]},
